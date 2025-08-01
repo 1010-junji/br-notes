@@ -21,10 +21,82 @@ https://knowledge.tungstenautomation.com/bundle/z-kb-articles-salesforce5/page/2
 
 
 
+### 起動
+- 何も設定をしないで実行した場合
 
 
 
+### パラメータを設定して実行
+```bash
+C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
+  --mc-url http://localhost:8070 ^
+  --shared-secret fOLLg7xesxG5WRELsAZP83ts5-KZCmat-WeuKz5NBBqwEmdDVzoGU0cIZN3mpsdI1Jn5x9O51gLAVzQH6JrdGg ^
+  --interval 10 --no-host-key true ^
+  --private-key p:\dummy
+```
 
+> [!QUESTION]
+> 現行仕様ではフォーマット上 `--private-key` が必要ですが、実在にかかわらずパス形式で指定されていればOK。
+> 上の例ではドライブもフォルダも存在しない値（`p:\dummy`）を指定していますが、ローカル環境のみの運用の場合、問題ありません。
+> よくある設定値としては `%USERPROFILE%\.ssh\id_rsa`
+
+![[Pasted image 20250729160825.png]]
+```bash
+C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
+More?   --mc-url http://localhost:8070 ^
+More?   --shared-secret fOLLg7xesxG5WRELsAZP83ts5-KZCmat-WeuKz5NBBqwEmdDVzoGU0cIZN3mpsdI1Jn5x9O51gLAVzQH6JrdGg ^
+More?   --interval 10 --no-host-key true ^
+More?   --private-key p:\dummy
+「wrapper.java.additional.100」プロパティは、コンフィギュレーション・ファイルの行番 #6 で再定義されました：C:\Program Files\BizRobo Basic 11.5.0.5\bin\headless.conf
+  古い値 wrapper.java.additional.100=-DcompanyName="OPEN, Inc."
+  新しい値 wrapper.java.additional.100=-Djava.awt.headless=true
+--> Wrapper がコンソールとして開始しました
+JVM 起動中…
+WrapperManager: Initializing...
+2025-07-30 17:45:30,464  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] started Synchronizer for http://localhost:8070 with a poll interval of 10s
+2025-07-30 17:45:31,346  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] starting the synchronization of pj_ua using com.kapowtech.synchronizer.git.GitSynchronizer
+2025-07-30 17:45:31,813  INFO com.kapowtech.synchronizer.git.GitSynchronizer - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.git.GitSynchronizer] cloned remote C:\RobotLifecycleManagement into local repository C:\Users\oishi\AppData\Local\Kofax RPA\11.5.0.5_549\Data\Synchronizer\pj_ua_localhost_RobotLifecycleManagement_develop (b47774543aa6e8e97ec90a438428755d8773dad5)
+2025-07-30 17:45:32,227  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] Missing unknown 17f5107aaf9041f927f2e0bf7710caf2f6181269. About to reset pj_ua and to try once more.
+2025-07-30 17:45:32,453  INFO com.kapowtech.synchronizer.git.GitSynchronizer - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.git.GitSynchronizer] cloned remote C:\RobotLifecycleManagement into local repository C:\Users\oishi\AppData\Local\Kofax RPA\11.5.0.5_549\Data\Synchronizer\pj_ua_localhost_RobotLifecycleManagement_develop (b47774543aa6e8e97ec90a438428755d8773dad5)
+2025-07-30 17:45:32,933  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] done synchronizing pj_ua 8f95476d370e537e8d1896aa091d73adfbf8e46d
+2025-07-30 17:45:32,934  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] starting the synchronization of pj_ua_prod using com.kapowtech.synchronizer.git.GitSynchronizer
+2025-07-30 17:45:33,042  INFO com.kapowtech.synchronizer.git.GitSynchronizer - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.git.GitSynchronizer] cloned remote C:\RobotLifecycleManagement into local repository C:\Users\oishi\AppData\Local\Kofax RPA\11.5.0.5_549\Data\Synchronizer\pj_ua_prod_localhost_RobotLifecycleManagement_prod (b47774543aa6e8e97ec90a438428755d8773dad5)
+2025-07-30 17:45:33,056  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] Missing unknown b814041f7cd7a6fcae380650cd154846735f508b. About to reset pj_ua_prod and to try once more.
+2025-07-30 17:45:33,193  INFO com.kapowtech.synchronizer.git.GitSynchronizer - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.git.GitSynchronizer] cloned remote C:\RobotLifecycleManagement into local repository C:\Users\oishi\AppData\Local\Kofax RPA\11.5.0.5_549\Data\Synchronizer\pj_ua_prod_localhost_RobotLifecycleManagement_prod (b47774543aa6e8e97ec90a438428755d8773dad5)
+2025-07-30 17:45:33,243  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] done synchronizing pj_ua_prod b47774543aa6e8e97ec90a438428755d8773dad5
+2025-07-30 17:45:43,288  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] starting the synchronization of pj_ua using com.kapowtech.synchronizer.git.GitSynchronizer
+2025-07-30 17:45:43,390  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] done synchronizing pj_ua 8f95476d370e537e8d1896aa091d73adfbf8e46d
+2025-07-30 17:45:43,391  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] starting the synchronization of pj_ua_prod using com.kapowtech.synchronizer.git.GitSynchronizer
+2025-07-30 17:45:43,445  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] done synchronizing pj_ua_prod b47774543aa6e8e97ec90a438428755d8773dad5
+2025-07-30 17:45:53,485  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] starting the synchronization of pj_ua using com.kapowtech.synchronizer.git.GitSynchronizer
+2025-07-30 17:45:53,569  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] done synchronizing pj_ua 8f95476d370e537e8d1896aa091d73adfbf8e46d
+2025-07-30 17:45:53,569  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] starting the synchronization of pj_ua_prod using com.kapowtech.synchronizer.git.GitSynchronizer
+2025-07-30 17:45:53,627  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] done synchronizing pj_ua_prod b47774543aa6e8e97ec90a438428755d8773dad5
+2025-07-30 17:46:03,675  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] starting the synchronization of pj_ua using com.kapowtech.synchronizer.git.GitSynchronizer
+2025-07-30 17:46:03,774  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] done synchronizing pj_ua 8f95476d370e537e8d1896aa091d73adfbf8e46d
+2025-07-30 17:46:03,774  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] starting the synchronization of pj_ua_prod using com.kapowtech.synchronizer.git.GitSynchronizer
+2025-07-30 17:46:03,833  INFO com.kapowtech.synchronizer.Main - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.Main] done synchronizing pj_ua_prod b47774543aa6e8e97ec90a438428755d8773dad5
+CTRL-C トラップされました。シャットダウン中。
+CTRL-C トラップされました。即時のシャットダウンを強制中。
+JVM はリクエストに応じて終了しませんでした、中止をします。
+JVM はリクエストに応じて中止しました。
+<-- Wrapper Stopped
+```
+
+**実行内容**
+1. パラメータ条件に沿って Synchronizer 起動
+	- http://localhost:8070 の MC に対して 10秒間隔で監視
+2. MC内の設定に沿って監視開始（Synchronizerが有効化されているプロジェクトに対して監視実行）
+	- プロジェクト `pj_ua` のGitとの同期開始
+	- プロジェクトで設定した `URL/パス` にベア リポジトリ作成
+	- 作成したローカルリポジトリにプロジェクトで設定したブランチ（`develop`）を作成
+3. ベア リポジトリをSynchronizer実行ユーザーのアプリケーションデータフォルダ内にクローンして個別のローカルリポジトリを作成
+	- `%LOCALAPPDATA%\Kofax RPA\11.5.0.5_549\Data\Synchronizer\pj_ua_localhost_RobotLifecycleManagement_develop`
+4. 10秒間隔でのリポジトリ監視開始
+
+> [!INFORMATION]
+> リポジトリ用のフォルダは事前に作成しておかなくても `MC` のプロジェクトに設定した値をもとに Synchronizer が自動的に作成します。
+> クローンしたレポジトリには同期対象のオブジェクトもファイルとして自動生成されます。これは、MCではこれらのオブジェクト情報をDB内に格納していますが、Gitによる更新情報をファイルベースで感知するために複製しているものと思われます。
 
 
 
