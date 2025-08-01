@@ -115,7 +115,7 @@ WrapperManager: Initializing...
 3. 全てのリポジトリに対して、10秒間隔での監視開始
 
 
-> [!INFORMATION]
+> [!NOTE]
 > - パラメータ設定の種類は3つ。
 > 	- `-c` 実行時にキーと値のセットで指定
 > 	- `-e` Docker上で `Scynchronizer` を動かす際のDockerの環境変数
@@ -124,8 +124,8 @@ WrapperManager: Initializing...
 > `synchronizer.settings` は `%LocalAppData%\Kofax RPA\11.5.0.5_549\Configuration` 配下に出力されます。
 
 
-
-
+ｐ
+ｘｘｘｘｘｘ
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
