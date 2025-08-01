@@ -10,8 +10,14 @@ RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は 
 
 - BizRobo! Lite での運用を想定し、`Management Console` 、`RoboServer` 、 `Synchronizer`、`Git` はすべて同じ端末にセットアップします。
 - BizRobo! `v11.5.0.5` に対して RLM のセットアップを行います。
-- `Synchronizer` は `RoboServer` に同梱されてインストールされるため、RLMの挙動自体に `RoboServer` は直接関与しませんが、環境条件として入れています。 
-- `Git` は別途端末にインストールしておく必要があります。
+- `Synchronizer` は `RoboServer` に同梱されてインストールされるため、RLMの挙動自体に `RoboServer` は直接関与しませんが、対象の端末には `RoboServer` をインストールしておく必要があります。 
+- `Git` は別途端末にインストールしましょう。
+　  
+	BizRobo! Lite では `Management Console` は1台のため、本番用のプロジェクト（`pj_ua_prod`: `prod` ブランチ）と開発用のプロジェクト（`pj_ua`: `develop` ブランチ）を用意して、両者を連携させる前提で記述します。[^1]
+
+	![構築前提の構成](images/rlm-lite.drawio.svg)
+
+[^1]: ただし、実際 BizRobo! Lite において、このような構成をとるのは意味がありません。今回は RLM のハンズオンを想定しているためこのような構成にしていますが、Lite において RLM を活用するのであれば、`develop`リポジトリのみを用意し、いざというときの切り戻しのために、本番環境へのアップロード情報を履歴として記録しておくといった利用法が適切だと思います。
 
 ### Synchronizer の起動方法
 
@@ -21,7 +27,7 @@ RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は 
 `Synchronizer` がインストールされているフォルダにカレントディレクトリを移したうえで実行します。
 
 **パラメータを付けずに起動**  
-```bash
+```cmd
 C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
 
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe
@@ -44,7 +50,7 @@ WrapperManager: Initializing...
 次に、以下の通りパラメータを指定して起動します。
 
 **パラメータを指定して実行**
-```bash
+```cmd
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
   --mc-url http://localhost:8080 ^
   --shared-secret fxxxxxxxxxxxxxAZP83ts5-KZCmat-WeuKz5NBBqwEmdDxxxxxxxxxg ^
@@ -54,17 +60,17 @@ C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
 
 - `-c` により実行時パラメータとして指定する。
 - `--mc-url` は各自の `Management Console` を指定
-- `--shared-secret` は `Management Console` の（管理 > サービス認証 > シンクロナイザー）から共有シークレットを取得して指定[^1]
+- `--shared-secret` は `Management Console` の（管理 > サービス認証 > シンクロナイザー）から共有シークレットを取得して指定[^2]
 - `--interval` は、`Synchronizer` が同期する間隔。30秒～60秒ぐらいの間隔でもよさそう。
 - `--no-host-key` については、今回 Git連携ツールと接続しないためどちらでもいいが、デフォルト値を採用
 - `--private-key` についても、今回 Git連携ツールと接続しないため内容についてはダミー値を設定。ただし、設定必須項目のため省略はできない。
 
-[^1]: 共有シークレットを取得するためには管理者アカウントで `Management Console` にログインする必要があります。
+[^2]: 共有シークレットを取得するためには管理者アカウントで `Management Console` にログインする必要があります。
 
 また、`Synchronizer` と連携する `Management Console` 側のリポジトリの設定を以下に示します。
 URLに設定しているのが `Bare Git Repository` のパスです。今回は Git連携ツール を使用しないため、直接ローカルにリモートリポジトリ（という位置づけになるベア リポジトリ）を作成します。
 
-```bash
+```cmd
 C:\Users\ore\Desktop> mkdir C:\RobotLifecycleManagement
 C:\Users\ore\Desktop> cd C:\RobotLifecycleManagement
 C:\RobotLifecycleManagement> git init --bare
@@ -72,7 +78,7 @@ C:\RobotLifecycleManagement> git init --bare
 
 ![リポジトリの設定](images/project.pj_ua.repository_top.png)
 
-```bash
+```cmd
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
   --mc-url http://localhost:8080 ^
   --shared-secret fxxxxxxxxxxxxxAZP83ts5-KZCmat-WeuKz5NBBqwEmdDxxxxxxxxxg ^
