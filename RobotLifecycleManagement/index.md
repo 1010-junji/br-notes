@@ -40,7 +40,7 @@ Robot Lifecycle Management（以下 RLM）は、BizRobo! の運用管理機能�
 | **Promotion Manager（人の役割）**     | 開発用環境で承認されたコミットを本番用環境へ昇格、または本番環境で問題が見つかったコミットをロールバックする運用の管理者                                                      | `Promotion Manager`用に `Bare Git Repository` から clone したリポジトリに対して、Git を直接操作することで実行。 SourceTree など GUI クライアントの利用も推奨。 |
 | **Git 連携ツール**                   | `Promotion Manager` がプルリクエストの承認をしたり、ローカルリポジトリから連携されたオブジェクトをCI/CDパイプラインで処理させるためのツール。GitHub, Bitbucket, 自社 Git サーバー | CI/CDパイプラインによって「開発環境」依存のリソースファイルを「本番環境」用に書き換えたり、ファイル内を精査して本番環境に上げてはいけない情報が混ざっていないかのチェックを実施可能。                      |
 
-![RLM を構成する主な要素](./rlm.drawio.svg)
+![RLM を構成する主な要素](rlm.drawio.svg)
 
 <br>
 
