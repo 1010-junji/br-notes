@@ -2,7 +2,61 @@
 
 RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は GitHub や GitLab などの Git 連携ツールを利用することにより発揮されますが、ここでは RLM という仕組みの理解を優先して Git の操作についてはコマンドを直接操作する形式で説明します。
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br>
+
+## RLMのセットアップ
+
+### 前提条件
+
+- BizRobo! Lite での運用を想定し、`Management Console` 、`RoboServer` 、 `Synchronizer`、`Git` はすべて同じ端末にセットアップします。
+- BizRobo! `v11.5.0.5` に対して RLM のセットアップを行います。
+- `Synchronizer` は `RoboServer` に同梱されてインストールされるため、RLMの挙動自体に `RoboServer` は直接関与しませんが、環境条件として入れています。 
+- `Git` は別途端末にインストールしておく必要があります。
+
+### Synchronizer の起動方法
+
+`Synchronizer` の起動にはパラメータの設定が必要です。パラメータの仕様については [ヘルプサイト](https://docshield.tungstenautomation.com/RPA/ja_JA/11.5.0-nlfihq5gwr/help/rpa_help/All_Shared/c_startsynch.html) で内容を確認しましょう。
+
+そのうえで、まずはパラメータを設定しないで起動するとどうなるのか見てみましょう。（単なる興味です）
+`Synchronizer` がインストールされているフォルダにカレントディレクトリを移したうえで実行します。
+
+**パラメータを付けずに起動**  
+
+```bash
+C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe
+--> Wrapper がコンソールとして開始しました
+JVM 起動中…
+WrapperManager: Initializing...
+2025-07-29 14:53:03,267  WARN com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] No settings given, falling back on defaults (use -h to for help)
+2025-07-29 14:53:03,271  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set mc_url = http://localhost:8080/ManagementConsole
+2025-07-29 14:53:03,271  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set shared_secret = null
+2025-07-29 14:53:03,271  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set shared_secret_file = null
+2025-07-29 14:53:03,272  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set interval = 3
+2025-07-29 14:53:03,272  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set private_key = C:\Users\oishi\.ssh\id_rsa
+2025-07-29 14:53:03,272  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set no_host_key = false
+2025-07-29 14:53:03,272 ERROR com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] shared_secret or shared_secret_file is missing in default values
+<-- Wrapper Stopped
+```
+
+**実行内容**
+1. 設定有無確認（パラメータ/環境変数/synchronizer.settings）
+2. デフォルト値の割り当て起動
+3. 必須項目不足によるエラー停止
+
+> [!NOTICE]
+> 必須項目が設定されていないと結局シャットダウンされるのに、なぜデフォルト値を設定？
+> （デフォルト設定される値はすべて必須項目のため、デフォルト値が活用されることはない。。）
+
+> [!QUESTION]
+> - パラメータの設定方法についてはドキュメントあり。
+> - 環境変数への設定はDocker環境を想定したIFであり、今回は考慮しない。
+> - `synchronizer.settings`への設定方法はパラメータ設定の内容を `-s` で保存。ただ、バイナリ形式なのか、設定状況の確認ができない。（仕様）
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 > [!TIP]  
 > #### Git 連携ツールを利用する意義

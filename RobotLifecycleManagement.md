@@ -17,78 +17,13 @@
 https://knowledge.tungstenautomation.com/bundle/z-kb-articles-salesforce5/page/22957.html
 
 
-```bash
-C:\Users\oishi>"C:\Program Files\BizRobo Basic 11.5.0.5\bin\Synchronizer.exe" --help
-「wrapper.java.additional.100」プロパティは、コンフィギュレーション・ファイルの行番 #6 で再定義されました：C:\Program Files\BizRobo Basic 11.5.0.5\bin\headless.conf
-  古い値 wrapper.java.additional.100=-DcompanyName="OPEN, Inc."
-  新しい値 wrapper.java.additional.100=-Djava.awt.headless=true
---> Wrapper がコンソールとして開始しました
-JVM 起動中…
-WrapperManager: Initializing...
-usage: Synchronizer
- -c,--command-line               Take settings from command line,
-                                 disregard the settings file and
-                                 environment.
- -e,--environment                Take settings from environment, disregard
-                                 the settings file
- -g,--generate-ssh-keys <arg>    Generate key-pair for ssh authentication
- -h,--help                       Print this help and exit
-    --interval <arg>             The interval (in seconds) between each
-                                 synchronization attempt (only in
-                                 conjunction with the -c option)
-    --mc-url <arg>               The URL for the Management Console (only
-                                 in conjunction with the -c option)
-    --no-host-key <arg>          Disable strict SSH host-key checking
-                                 (only in conjunction with the -c option)
-    --private-key <arg>          Path to private SSH key to use with SSH
-                                 (only in conjunction with the -c option)
- -r,--reset-hard                 Reset all version information and remove
-                                 all local cache
- -s,--save                       Store settings into the settings file and
-                                 exit
-    --shared-secret <arg>        The Synchronizer shared secret for
-                                 Management Console (only in conjunction
-                                 with the -c option)
-    --shared-secret-file <arg>   The Synchronizer shared secret file for
-                                 Management Console (only in conjunction
-                                 with the -c option)
- -v,--version                    Print version information and exit
-<-- Wrapper Stopped
-```
+
 
 
 
 ### 起動
 - 何も設定をしないで実行した場合
-```bash
-C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe
---> Wrapper がコンソールとして開始しました
-JVM 起動中…
-WrapperManager: Initializing...
-2025-07-29 14:53:03,267  WARN com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] No settings given, falling back on defaults (use -h to for help)
-2025-07-29 14:53:03,271  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set mc_url = http://localhost:8080/ManagementConsole
-2025-07-29 14:53:03,271  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set shared_secret = null
-2025-07-29 14:53:03,271  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set shared_secret_file = null
-2025-07-29 14:53:03,272  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set interval = 3
-2025-07-29 14:53:03,272  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set private_key = C:\Users\oishi\.ssh\id_rsa
-2025-07-29 14:53:03,272  INFO com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] Set no_host_key = false
-2025-07-29 14:53:03,272 ERROR com.kapowtech.synchronizer.runtime.Settings - [EVENT UNSPECIFIED -> /com.kapowtech.synchronizer.runtime.Settings] shared_secret or shared_secret_file is missing in default values
-<-- Wrapper Stopped
-```
 
-**実行内容**
-1. 設定有無確認（パラメータ/環境変数/synchronizer.settings）
-2. デフォルト値の割り当て起動
-3. 必須項目不足によるエラー停止
-
-> [!NOTICE]
-> 必須項目が設定されていないと結局シャットダウンされるのに、なぜデフォルト値を設定？
-> （デフォルト設定される値はすべて必須項目のため、デフォルト値が活用されることはない。。）
-
-> [!QUESTION]
-> - パラメータの設定方法についてはドキュメントあり。
-> - 環境変数への設定はDocker環境を想定したIFであり、今回は考慮しない。
-> - `synchronizer.settings`への設定方法はパラメータ設定の内容を `-s` で保存。ただ、バイナリ形式なのか、設定状況の確認ができない。（仕様）
 
 
 ### パラメータを設定して実行
