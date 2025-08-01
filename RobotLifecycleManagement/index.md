@@ -11,8 +11,6 @@ Robot Lifecycle Management（以下 RLM）は、BizRobo! の運用管理機能�
 - **同期対象オブジェクト**
     
     - robots / types / snippets / resources / schedules / OAuth 設定 を含む複数種のワークオブジェクトを取り扱えます。(何を同期対象とするかについては、 `Management Console` のプロジェクト管理機能から選択します。) 
-
-    	>  ![プロジェクトリポジトリ](./project.pj_ua.repository.png)
         
 - **Git プロトコル**
     
@@ -153,8 +151,6 @@ Robot Lifecycle Management（以下 RLM）は、BizRobo! の運用管理機能�
 - RLMは利用できません。
 
 <br>
-
----
 
 [^1]: BizRobo! Basic ユーザーで、大規模に運用している場合には Git連携ツールを用いてロボットのリリース管理を行うことは非常に有効だと思います。またそのような場合には、`prod=本番用`, `develop=開発用` だけでなく、テスト環境用のブランチを追加することでより厳密なバージョン管理を行うことが可能です。([ブランチ選択の方針](https://docshield.tungstenautomation.com/RPA/ja_JA/11.5.0-nlfihq5gwr/help/rpa_help/All_Shared/c_select_branchingstrategy.html))
 
