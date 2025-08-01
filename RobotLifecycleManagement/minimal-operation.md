@@ -70,7 +70,7 @@ C:\Users\ore\Desktop> cd C:\RobotLifecycleManagement
 C:\RobotLifecycleManagement> git init --bare
 ```
 
-![[images/project.pj_ua.repository_top.png]]
+![リポジトリの設定](images/project.pj_ua.repository_top.png)
 
 ```bash
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
