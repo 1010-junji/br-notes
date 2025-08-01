@@ -3,6 +3,7 @@
 RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は GitHub や GitLab などの Git 連携ツールを利用することにより発揮されますが、ここでは RLM という仕組みの理解を優先して Git の操作についてはコマンドを直接操作する形式で説明します。
 
 <br>
+
 ## RLMのセットアップ
 
 ### 前提条件
@@ -69,7 +70,7 @@ C:\Users\ore\Desktop> cd C:\RobotLifecycleManagement
 C:\RobotLifecycleManagement> git init --bare
 ```
 
-![[project.pj_ua.repository_top.png]]
+![[images/project.pj_ua.repository_top.png]]
 
 ```bash
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
