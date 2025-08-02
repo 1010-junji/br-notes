@@ -205,66 +205,6 @@ RLMの「連携」機能は、おそらくこの `git push` (Aからベアへ) �
 
 **【コマンドごとの詳細解説】**
 
-```shell
-# 1. ベアリポジトリ用のディレクトリ作成
-mkdir bare-repo\
-cd bare-repo\
-
-# 2. ベアリポジトリの初期化
-git init --bare
-# => ここで c:\bare-repo\ にワーキングツリーのない、Gitのデータベースが作成されます。
-#    ls コマンドなどで中を見ると、HEAD, config, objects, refs といったファイル/ディレクトリが見えます。
-#    これがベアリポジトリの本体です。
-```
-
-```shell
-# 3. 作業用リポジトリの作成（クローン）
-cd ..
-git clone bare-repo\ normal-repoa
-# => "bare-repo" をリモート（=origin）として持つ、ローカルリポジトリ "normal-repoa" を作成します。
-#    `git clone` は以下の処理を自動で行います。
-#    a. `normal-repoa` ディレクトリを作成
-#    b. `git init` を実行して .git ディレクトリを作成
-#    c. `git remote add origin c:\bare-repo\` を実行し、リモートリポジトリを登録
-#    d. `git fetch` を実行し、リモートの全データをダウンロード
-#    e. デフォルトブランチ（この時点ではまだ存在しないが、通常はmaster/main）をチェックアウト
-#    ※ `warning: You appear to have cloned an empty repository.` は、ベアリポジトリにまだコミットが一つもないため表示される正常な警告です。
-```
-
-```shell
-# 4. 最初のコミットを作成
-cd normal-repoa\
-git commit --allow-empty -m 'initial commit'
-# => プロジェクトのヒストリーを開始するための「ルートコミット」を作成します。
-#    `--allow-empty` は、ファイルに変更がなくてもコミットを作成できるオプションです。
-#    プロジェクトの基点を作るためによく使われます。
-```
-
-```shell
-# 5. masterブランチを中央リポジトリにpush
-git push origin master
-# => ローカルの `master` ブランチを `origin` (c:\bare-repo\) に送信します。
-#    ※あなたの例の `Everything up-to-date` は少し奇妙です。通常はオブジェクトが書き込まれる旨のメッセージが出ます。
-#    おそらく、このコマンドの前に何らかの操作があったか、あるいはGitのバージョンや設定による違いかもしれません。
-#    正しくは、このコマンドでベアリポジトリに初めて `master` ブランチが作られます。
-```
-
-```shell
-# 6. 開発用ブランチの作成と切り替え
-git checkout -b develop
-# => `develop` という名前の新しいブランチを作成し (`-b`)、そのブランチに移動 (`checkout`) します。
-```
-
-```shell
-# 7. developブランチを中央リポジトリにpushし、上流ブランチを設定
-git push -u origin develop:develop
-# => このコマンドは重要なので分解します。
-#    - `push`: 送信します
-#    - `-u` or `--set-upstream`: 今後の `git pull/push` のために、ローカルの `develop` とリモートの `develop` を紐付けます。これにより、次回から `git push` だけで `origin` の `develop` に push されるようになります。
-#    - `origin`: 送信先のリモート名
-#    - `develop:develop`: `<ローカルブランチ名>:<リモートブランチ名>` の形式。ローカルの`develop`をリモートの`develop`としてpushする、という意味です。（単に `develop` と書いても通常は同じ意味になります）
-```
-
 👉 [[#リポジトリ初期化に関するQ&A]]
 
 ---
@@ -278,43 +218,6 @@ git push -u origin develop:develop
 
 **【コマンドごとの詳細解説】**
 
-```shell
-# 1. 作業ディレクトリへ移動
-cd normal-repoa\
-
-# 2. 念のため最新のdevelopブランチに切り替え
-git checkout develop
-
-# 3. リモートの最新情報を取得（重要！）
-git pull
-# => マージする前に、他の人が `develop` ブランチを更新している可能性に備え、リモート（ベアリポジトリ）から最新の変更を取得します。
-#    `git pull` は `git fetch` (リモートの情報を取ってくる) + `git merge` (ローカルのブランチに統合する) のショートカットです。
-#    これを怠ると、古い状態でマージしてしまい、先祖返りやコンフリクトの原因になります。
-```
-
-```shell
-# 4. マージ先のブランチ（本番ブランチ）に切り替え
-git checkout main
-# => `develop` の変更を取り込む先のブランチ、つまり `main` に移動します。
-```
-
-```shell
-# 5. developブランチをmainブランチにマージ
-git merge --no-ff develop
-# => これが核心部分です。
-#    - `git merge develop`: `develop` ブランチのヒストリーを現在のブランチ (`main`) に取り込みます。
-#    - `--no-ff`: "No Fast-Forward" の略。これは非常に重要なオプションです。
-#      - **Fast-Forward (デフォルトの挙動):** もし `main` ブランチが `develop` が分岐してから一度も更新されていなければ、Gitはただ `main` のポインタを `develop` の最新コミットに移動させるだけです。ヒストリーが一直線になり、マージしたという事実が残りません。
-#      - **--no-ff (マージコミットを作成):** 上記の条件でも、必ず「`develop`を`main`にマージしました」という新しいコミット（マージコミット）を作成します。
-#      - **RLMにおける `--no-ff` の重要性:** このマージコミットが「開発版を本番に昇格させた」という明確な証拠としてヒストリーに残ります。いつ、誰が、どのバージョンの `develop` を昇格させたのかが一目瞭然となり、監査や問題発生時の原因追跡に極めて有効です。RLMのようなライフサイクル管理では、このオプションはほぼ必須と言えるでしょう。
-```
-
-```shell
-# 6. マージ結果を中央リポジトリにpush
-git push
-# => ローカルで更新された `main` ブランチ（マージコミットを含む）を、リモート (`origin` = `c:\bare-repo\`) に送信します。
-#    これで、ベアリポジトリの `main` が更新され、レポジトリBが `git pull` すれば変更を受け取れる状態になりました。
-```
 
 
 ### 5．戻す方法
