@@ -4,3 +4,7 @@ description: "技術的な知識をまとめるナレッジベース"
 
 # Caymanテーマ
 theme: jekyll-theme-cayman
+
+# ビルドから除外するファイル/フォルダのリスト
+exclude:
+  - .obsidian/
