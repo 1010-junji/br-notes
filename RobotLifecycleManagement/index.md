@@ -40,7 +40,7 @@ Robot Lifecycle Management（以下 RLM）は、BizRobo! の運用管理機能�
 | **Promotion Manager（人の役割）**     | 開発用環境で承認されたコミットを本番用環境へ昇格、または本番環境で問題が見つかったコミットをロールバックする運用の管理者                                                      | `Promotion Manager`用に `Bare Git Repository` から clone したリポジトリに対して、Git を直接操作することで実行。 SourceTree など GUI クライアントの利用も推奨。 |
 | **Git 連携ツール**                   | `Promotion Manager` がプルリクエストの承認をしたり、ローカルリポジトリから連携されたオブジェクトをCI/CDパイプラインで処理させるためのツール。GitHub, Bitbucket, 自社 Git サーバー | CI/CDパイプラインによって「開発環境」依存のリソースファイルを「本番環境」用に書き換えたり、ファイル内を精査して本番環境に上げてはいけない情報が混ざっていないかのチェックを実施可能。                      |
 
-![RLM を構成する主な要素](rlm.drawio.svg)
+![RLM を構成する主な要素](images/rlm.drawio.svg)
 
 <br>
 
@@ -77,7 +77,7 @@ Robot Lifecycle Management（以下 RLM）は、BizRobo! の運用管理機能�
 3. **開発用・本番用の Management Console で Git URL(/ファイルパス) とブランチ名を設定**（管理 > プロジェクト > リポジトリ）
 4. **Synchronizer を CLI で設定保存** [^2]
     
-   ```command
+   ```cmd
     REM BizRobo! v11.5 を前提に記載（パラメータは利用するバージョンにより異なります。）
     Synchronizer.exe -c ^
       --mc-url http://localhost:8070 ^
@@ -89,7 +89,7 @@ Robot Lifecycle Management（以下 RLM）は、BizRobo! の運用管理機能�
     - Git連携ツールは使用しないため、`--private-key` はダミーの値で問題ありません。
     - `-s` で `synchronizer.settings` を保存し終了。（v11.5の場合、`%LOCALAPPDATA%\Kofax RPA\11.5.0.5_549\Configuration` にファイルが生成されます。）
         
-5. **同期テスト** – `Synchronizer.exe --interval 0` で単発同期し、差分が Git に正しくコミットされるか確認。
+5. **同期確認** –  リポジトリ設定をしたプロジェクトに登録されているロボットの `Management Console` 上でのリビジョン番号が `local` ではなく、`1c0c0c15a06....` という形式の番号に更新されていることを確認。
 6. **昇格／ロールバック 手順を定義** 
     - 開発用環境の更新を確認し、本番用リポジトリにマージ（origin/develop -[pull]-> develop -[merge]-> prod -[push]-> origin/prod）
     - 本番環境の異常を確認し、コミットをリバート（prod -[revert]-> prod -[push]-> origin/prod, prod -[merge]→ develop -[push]-> origin/develop）
