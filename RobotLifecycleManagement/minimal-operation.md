@@ -197,6 +197,35 @@ WrapperManager: Initializing...
 
 
 <br>
+### Synchronizer のサービス登録
+
+`Synchronizer` のセットアップと挙動が確認出来たら、実運用に向けてWindowsのサービスに登録します。
+
+#### Windows サービスの追加 
+```cmd
+C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
+
+C:\Program Files\BizRobo Basic 11.5.0.5\bin> ServiceInstaller.exe -i Synchronizer.conf ^
+wrapper.ntservice.account=<domain\account> ^
+wrapper.ntservice.password.prompt=true ^
+wrapper.ntservice.name="Synchronizer_11.5.0.5" ^
+wrapper.ntservice.starttype=MANUAL wrapper.syslog.loglevel=INFO
+```
+
+ - `wrapper.ntservice.name` は任意の名称をつけましょう。
+ - `wrapper.ntservice.account` については、`RoboServer` のサービス起動ユーザーと合わせるのがいいでしょう。
+
+#### Windows サービスの削除  
+```cmd
+C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
+
+C:\Program Files\BizRobo Basic 11.5.0.5\bin> ServiceInstaller.exe -r Synchronizer.conf ^
+wrapper.ntservice.name="Synchronizer_11.5.0.5" 
+```
+
+- `wrapper.ntservice.name` は削除するサービスの名称を指定します。
+
+<br>
 
 ## ロボット ライフサイクル マネジメントの実行（運用）
 
@@ -259,21 +288,110 @@ git push
 RLMにより本番リリースしたロボットやスケジュールなどのオブジェクトに不備があり、リリース前の状態に切り戻したい場合に随時実施します。
 
 1. 開発者からの依頼を受領する。（リビジョン番号を提示）
-2. 週次での最新版を`develop` ブランチへ Pullして、ローカルリポジトリへ同期
-3. 週次締め切り時点で依頼を受領したリビジョン番号までのコミット情報を `prod` ブランチへマージ
-4. `prod` ブランチの内容を確認し、問題がなければ既定の時刻に`origin/prod` ブランチへ Push して本番リリース
+2. 本番環境の状態を切り戻すために `prod` を最新化
+3. リビジョン番号を指定して `prod` ブランチを切り戻し`origin/prod` ブランチへ Push して本番リリース
+4. 同様に`develop` ブランチに `prod` ブランチを同期し、`origin/develop`ブランチへもPushして開発・テスト用環境も切り戻す
 
+```bash
+# 1. 作業ディレクトリへ移動
+$ cd /c/Users/ore/Desktop/RLM
+
+# 2. 作業ブランチを prod に切り替え
+$ git checkout prod
+
+# 3. prod の状態を最新化
+$ git pull
+
+# 4. ブランチ構造とマージ状況をグラフ表示して把握
+# ── ここで prod／develop／main の分岐点・マージ履歴を視覚的に確認し、
+#      どのコミットを取り消す（revert する）かを決定している。
+$ git log --oneline --graph
+*   8ec7969 (HEAD -> prod, origin/prod) developにrevertをマージしない場合
+|\
+| * 6729b97 (origin/develop, develop) ノイズ除去→ロボットに登録
+* | 0febaa2 ノイズ除去
+* | e481bb4 Merge branch 'develop' into prod
+|\|
+:
+```
+
+```bash
+# 5. develop 側の問題コミット 6729b97 を「親¹基準」で revert（まだコミットしない）
+# ── 6729b97 はマージコミットなので -m 1 で「親¹」（＝develop 側）を残し、
+#      prod に入ってしまった変更だけを打ち消すパッチを作成して index に追加。
+$ git revert -m 1 --no-commit 6729b97
+
+# 6. 生成された revert パッチを prod ブランチ上で確定
+# ── prod の先頭に「ノイズ除去2」コミットが乗り、
+#      以後のマージでこの取り消しが他ブランチへ伝搬できる状態に。
+$  git commit -m "ノイズ除去2"
+
+# 7. 最新履歴を再確認し、revert が HEAD にいることを確認
+# ── ここで 4c58dea (ノイズ除去2) が prod の先頭にあることを目視確認。
+$ git log --oneline --graph
+* 4c58dea (HEAD -> prod) ノイズ除去2
+*   8ec7969 (origin/prod) developにrevertをマージしない場合
+|\
+| * 6729b97 (origin/develop, develop) ノイズ除去→ロボットに登録
+* | 0febaa2 ノイズ除去
+* | e481bb4 Merge branch 'develop' into prod
+|\|
+:
+
+# 8. prod ブランチの更新内容をリモートへ反映
+# ── origin/prod に「ノイズ除去2」が追加され、
+#      CI や他開発者が prod を取得しても同じ履歴になる。
+$ git push
+```
+
+```bash
+# 9. 作業ブランチを develop に切り替え
+$ git checkout develop
+
+# 10. prod で確定した取り消しを develop へ取り込む
+# ── --no-ff でマージコミットを必ず生成し履歴を明示、
+#      --no-commit でコンフリクトの有無を確認してからコミットする安全策。
+$ git merge --no-ff --no-commit prod
+
+# 11. マージ結果をコミットして develop を更新
+# ── develop にも「ノイズ除去2」が反映され、
+#      prod と develop 間の差分が解消される。 
+$ git commit -m "developにrevertマージし、origin/develop にpushした場合"
+
+# 12. develop ブランチの履歴を確認
+# ── 6160483 マージコミットが develop の先頭に存在することを確認。
+$ git log --oneline --graph
+*   6160483 (HEAD -> develop) developにrevertマージし、origin/develop にpushした場合
+|\
+| * 4c58dea (origin/prod, prod) ノイズ除去2
+| *   8ec7969 developにrevertをマージしない場合
+| |\
+| |/
+|/|
+* | 6729b97 (origin/develop) ノイズ除去→ロボットに登録
+| * 0febaa2 ノイズ除去
+| *   e481bb4 Merge branch 'develop' into prod
+| |\
+| |/
+:
+
+# 13. develop の変更をリモートへ反映
+# ── origin/develop も prod と同じく問題コミットが取り消された状態になり、
+#      今後の開発で同じノイズが再登場するリスクを低減。
+$ git push
+```
 
 <br>
 
-### 分割更新
+### その他の更新対応
 
+上記で挙げた通常運用の他、開発者の数が多く、ロボットのリリースや更新が頻繁に起こる場合には「コミットされたリストの中の一部のみをマージしたい」ということや、「何らかの理由で本番環境にPushできなくなってしまった（コンフリクトの発生）」ということが起こるでしょう。
+
+また、`Git` を長期間運用していく中で日々履歴情報が蓄積してゆき、少しずつではありますがディスク容量を消費していきます。こちらについても **Git自体の運用設計** を行い、定期的に不要な履歴や使用しなくなったオブジェクトを削除するなどの考慮が必要になってきます。
+
+ただし、上記のようなケースへの対応は **ロボット ライフサイクル マネジメント** に関する知識・ノウハウというよりは純粋に `Git` の運用に関する知識・ノウハウですので、解説については専門の書籍やインターネット上の情報に譲りたいと思います。
 
 <br>
-
-### コンフリクトが発生した際の対応
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 > [!TIP]  
 > #### Git 連携ツールを利用する意義
