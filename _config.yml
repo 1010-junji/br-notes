@@ -1,1 +1,6 @@
-theme: jekyll-theme-cayman
+# サイトの基本設定
+title: BR-Notes
+description: "技術的な知識をまとめるナレッジベース"
+
+# 使用するテーマを指定
+theme: jekyll-theme-minimal
