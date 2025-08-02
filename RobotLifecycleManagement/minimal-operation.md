@@ -21,6 +21,8 @@ RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は 
 
 [^1]: ただし、実際 BizRobo! Lite において、このような構成をとるのは意味がありません。今回は RLM のハンズオンを想定しているためこのような構成にしていますが、Lite において RLM を活用するのであれば、`develop`リポジトリのみを用意し、いざというときの切り戻しのために、本番環境へのアップロード情報を履歴として記録しておくといった利用法が適切だと思います。
 
+<br>
+
 ### RLM用リポジトリの作成
 
 以下のコマンドにより RLM用のベア リポジトリを作成するのとともに、`Promotion Manager` が管理作業を行うための作業用リポジトリの作成（クローン）をします。
@@ -34,7 +36,6 @@ C:\Users\ore> cd C:\RobotLifecycleManagement
 
 :: ベアリポジトリの初期化
 C:\RobotLifecycleManagement> git init --bare
-Initialized empty Git repository in C:/RobotLifecycleManagement/
 ```
 
 **作業用リポジトリの作成**
@@ -43,9 +44,6 @@ Initialized empty Git repository in C:/RobotLifecycleManagement/
 C:\RobotLifecycleManagement> cd ..
 
 C:\> git clone RobotLifecycleManagement C:\Users\ore\Desktop\RLM
-Cloning into 'C:\Users\ore\Desktop\RLM'...
-warning: You appear to have cloned an empty repository.
-done.
 ```
 
 **ブランチの作成と初期化**
@@ -56,22 +54,21 @@ C:\> cd C:\Users\ore\Desktop\RLM
 ::    `--allow-empty` は、ファイルに変更がなくてもコミットを作成できるオプションです。
 ::   プロジェクトの基点を作るためによく使われます。
 C:\Users\ore\Desktop\RLM>git commit --allow-empty -m "initial commit"
-[main (root-commit) ca63232] initial commit
 
 :: `develop` という名前の新しいブランチを作成し (`-b`)、そのブランチに移動 (`checkout`) します。
 C:\Users\ore\Desktop\RLM> git checkout -b develop
-Switched to a new branch 'develop'
 
 :: developブランチを中央リポジトリにpushし、上流ブランチを設定
 C:\Users\ore\Desktop\RLM> git push -u origin develop:develop
 
 :: `prod` という名前の新しいブランチを作成し (`-b`)、そのブランチに移動 (`checkout`) します。
 C:\Users\ore\Desktop\RLM> git checkout -b prod
-Switched to a new branch 'prod'
 
 :: prodブランチを中央リポジトリにpushし、上流ブランチを設定
 C:\Users\ore\Desktop\RLM> git push -u origin prod:prod
 ```
+
+<br>
 
 ### Synchronizer の起動方法
 
@@ -178,13 +175,14 @@ WrapperManager: Initializing...
 	- ログからはわからないが、おそらくブランチも作成（`pj_ua=develop`、`pj_ua_prod=prod`）
 3. 全てのリポジトリに対して、10秒間隔での監視開始
 
+<br>
 
 ### 同期確認
 
 `Synchronizer` が起動して同期処理を開始したのち、`Management Console` の画面からその状況を確認します。
 以下図のようにプロジェクト `pj_ua` のリビジョン番号が `local` ではなく `1c0c0c15a06....` というGitで発行される形式の文字列に変わっていれば、無事 `develop` ブランチについては同期ができたといえます。
 
-![リビジョン番号更新](repository.revision.updated.png)
+![リビジョン番号更新](images/repository.revision.updated.png)
 
 この時点で `pj_ua_prod` プロジェクトにはロボットが登録されていないためリストには表示されませんが、後述の手順で `pj_ua` プロジェクトのロボットがマージされると下記のように同じリビジョン番号が付与されます。
 
@@ -214,64 +212,68 @@ WrapperManager: Initializing...
 
 ### 通常運用（基本の型）
 
-「毎週水曜日の12時実行」などとタイミングを決めたうえで、期限までに集まった依頼に対して週次作業として実施します。
+「毎週水曜日の12時実行」などとタイミングを決めたうえで、期限までに集まった依頼に対して週次更新を実施します。
 
 1. 開発者からの依頼を受領する。（リビジョン番号を提示）
 2. 週次での最新版を`develop` ブランチへ Pullして、ローカルリポジトリへ同期
 3. 週次締め切り時点で依頼を受領したリビジョン番号までのコミット情報を `prod` ブランチへマージ
 4. `prod` ブランチの内容を確認し、問題がなければ既定の時刻に`origin/prod` ブランチへ Push して本番リリース
 
-```git
-
-```
-
-```shell
+**gitでの処理**
+```bash
 # 1. 作業ディレクトリへ移動
-cd normal-repoa\
+$ cd /c/Users/ore/Desktop/RLM
 
 # 2. 念のため最新のdevelopブランチに切り替え
-git checkout develop
+$ git checkout develop
 
 # 3. リモートの最新情報を取得（重要！）
-git pull
-# => マージする前に、他の人が `develop` ブランチを更新している可能性に備え、リモート（ベアリポジトリ）から最新の変更を取得します。
-#    `git pull` は `git fetch` (リモートの情報を取ってくる) + `git merge` (ローカルのブランチに統合する) のショートカットです。
-#    これを怠ると、古い状態でマージしてしまい、先祖返りやコンフリクトの原因になります。
+$ git pull
 ```
 
-```shell
+```bash
 # 4. マージ先のブランチ（本番ブランチ）に切り替え
-git checkout main
-# => `develop` の変更を取り込む先のブランチ、つまり `main` に移動します。
+$ git checkout prod
+
+# 5. developブランチをprodブランチにマージ(受け入れ)
+git merge --no-ff develop　…　最新のコミットまでマージ
+もしくは
+git merge --no-ff <リビジョン番号>　…　指定したリビジョンのコミットまでマージ
 ```
 
-```shell
-# 5. developブランチをmainブランチにマージ
-git merge --no-ff develop
-# => これが核心部分です。
-#    - `git merge develop`: `develop` ブランチのヒストリーを現在のブランチ (`main`) に取り込みます。
-#    - `--no-ff`: "No Fast-Forward" の略。これは非常に重要なオプションです。
-#      - **Fast-Forward (デフォルトの挙動):** もし `main` ブランチが `develop` が分岐してから一度も更新されていなければ、Gitはただ `main` のポインタを `develop` の最新コミットに移動させるだけです。ヒストリーが一直線になり、マージしたという事実が残りません。
-#      - **--no-ff (マージコミットを作成):** 上記の条件でも、必ず「`develop`を`main`にマージしました」という新しいコミット（マージコミット）を作成します。
-#      - **RLMにおける `--no-ff` の重要性:** このマージコミットが「開発版を本番に昇格させた」という明確な証拠としてヒストリーに残ります。いつ、誰が、どのバージョンの `develop` を昇格させたのかが一目瞭然となり、監査や問題発生時の原因追跡に極めて有効です。RLMのようなライフサイクル管理では、このオプションはほぼ必須と言えるでしょう。
-```
+> [!NOTE]  
+> `--no-ff`: "No Fast-Forward" の略。
+> - **Fast-Forward (デフォルトの挙動):** もし `prod` ブランチが `develop` が分岐してから一度も更新されていなければ、Gitはただ `main` のポインタを `develop` の最新コミットに移動させるだけです。ヒストリーが一直線になり、マージしたという事実が残りません。
+> - **--no-ff (マージコミットを作成):** 上記の条件でも、必ず「`develop`を`main`にマージしました」という新しいコミット（マージコミット）を作成します。
+> - **RLMにおける `--no-ff` の重要性:** このマージコミットが「開発版を本番に昇格させた」という明確な証拠としてヒストリーに残ります。いつ、誰が、どのバージョンの `develop` を昇格させたのかが一目瞭然となり、監査や問題発生時の原因追跡に極めて有効です。RLMのようなライフサイクル管理では、このオプションはほぼ必須と言えるでしょう。
 
-```shell
+```bash
 # 6. マージ結果を中央リポジトリにpush
 git push
-# => ローカルで更新された `main` ブランチ（マージコミットを含む）を、リモート (`origin` = `c:\bare-repo\`) に送信します。
-#    これで、ベアリポジトリの `main` が更新され、レポジトリBが `git pull` すれば変更を受け取れる状態になりました。
 ```
 
-### 本番更新の取り消し、切り戻し
+<br>
 
+### 本番更新後の切り戻し
+
+RLMにより本番リリースしたロボットやスケジュールなどのオブジェクトに不備があり、リリース前の状態に切り戻したい場合に随時実施します。
+
+1. 開発者からの依頼を受領する。（リビジョン番号を提示）
+2. 週次での最新版を`develop` ブランチへ Pullして、ローカルリポジトリへ同期
+3. 週次締め切り時点で依頼を受領したリビジョン番号までのコミット情報を `prod` ブランチへマージ
+4. `prod` ブランチの内容を確認し、問題がなければ既定の時刻に`origin/prod` ブランチへ Push して本番リリース
+
+
+<br>
 
 ### 分割更新
 
 
+<br>
+
 ### コンフリクトが発生した際の対応
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 > [!TIP]  
 > #### Git 連携ツールを利用する意義
