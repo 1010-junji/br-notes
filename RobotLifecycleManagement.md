@@ -9,9 +9,6 @@
 
 
 
-
-[^4]: 複数プロジェクトをまたぎ、Management Consoleで1つの `Bare Git Repository` を共有する場合は ブランチ名により Management Console 内の各プロジェクトを識別することも可能ですが、管理が煩雑になることに加え、ブランチ名が誤って重複してしまった場合、プロジェクト間のオブジェクトを意図せず同期してしまったり、内部でコンフリクトが発生し、RLMの障害、運用の中断が発生します。
-
 ---
 
 https://knowledge.tungstenautomation.com/bundle/z-kb-articles-salesforce5/page/22957.html

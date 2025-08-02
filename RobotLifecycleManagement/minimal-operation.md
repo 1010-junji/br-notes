@@ -15,6 +15,8 @@ RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は 
 　  
 	BizRobo! Lite では `Management Console` は1台のため、本番用のプロジェクト（`pj_ua_prod`: `prod` ブランチ）と開発用のプロジェクト（`pj_ua`: `develop` ブランチ）を用意して、両者を連携させる前提で記述します。[^1]
 
+	以降の記述では、`Design Studio` で作成したロボットが `pj_ua` プロジェクトにアップロードされた状態をスタートして `Synchronizer` を起動していきます。（`pj_ua_prod` プロジェクトは空の状態）
+
 	![構築前提の構成](images/rlm-lite.drawio.svg)
 
 [^1]: ただし、実際 BizRobo! Lite において、このような構成をとるのは意味がありません。今回は RLM のハンズオンを想定しているためこのような構成にしていますが、Lite において RLM を活用するのであれば、`develop`リポジトリのみを用意し、いざというときの切り戻しのために、本番環境へのアップロード情報を履歴として記録しておくといった利用法が適切だと思います。
@@ -55,7 +57,7 @@ C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
   --mc-url http://localhost:8080 ^
   --shared-secret fxxxxxxxxxxxxxAZP83ts5-KZCmat-WeuKz5NBBqwEmdDxxxxxxxxxg ^
   --interval 10 --no-host-key false ^
-  --private-key p:\dummy
+  --private-key p:\dummy -s
 ```
 
 - `-c` により実行時パラメータとして指定する。
@@ -64,11 +66,22 @@ C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
 - `--interval` は、`Synchronizer` が同期する間隔。30秒～60秒ぐらいの間隔でもよさそう。
 - `--no-host-key` については、今回 Git連携ツールと接続しないためどちらでもいいが、デフォルト値を採用
 - `--private-key` についても、今回 Git連携ツールと接続しないため内容についてはダミー値を設定。ただし、設定必須項目のため省略はできない。
+- `-s` によりコマンドラインに指定したパラメータをファイルに記録します。
 
 [^2]: 共有シークレットを取得するためには管理者アカウントで `Management Console` にログインする必要があります。
 
+> [!NOTE]
+> - パラメータ設定の種類は3つ。
+> 	- `-c` 実行時にキーと値のセットで指定
+> 	- `-e` Docker上で `Scynchronizer` を動かす際のDockerの環境変数
+> 	- なし。 `-c` と同時に `-s` オプションを付与し手実行すると、`synchronizer.settings` ファイルとしてパラメータが出力されます。そのため、`synchronizer.settings` ファイルの存在する環境においてはパラメータを指定することなく `Scynchronizer` を起動できます。
+> 
+> `synchronizer.settings` は `%LocalAppData%\Kofax RPA\11.5.0.5_549\Configuration` 配下に出力されます。
+
 また、`Synchronizer` と連携する `Management Console` 側のリポジトリの設定を以下に示します。
 URLに設定しているのが `Bare Git Repository` のパスです。今回は Git連携ツール を使用しないため、直接ローカルにリモートリポジトリ（という位置づけになるベア リポジトリ）を作成します。
+
+以下のコマンドによりベア リポジトリを生成しますが、初回 `Scynchronizer` 起動時に当該のリポジトリがない場合には、`Scynchronizer` によりベア リポジトリが自動的に生成されます。
 
 ```cmd
 C:\Users\ore\Desktop> mkdir C:\RobotLifecycleManagement
@@ -122,19 +135,50 @@ WrapperManager: Initializing...
 3. 全てのリポジトリに対して、10秒間隔での監視開始
 
 
-> [!NOTE]
-> - パラメータ設定の種類は3つ。
-> 	- `-c` 実行時にキーと値のセットで指定
-> 	- `-e` Docker上で `Scynchronizer` を動かす際のDockerの環境変数
-> 	- なし。 `-c` と同時に `-s` オプションを付与し手実行すると、`synchronizer.settings` ファイルとしてパラメータが出力されます。そのため、`synchronizer.settings` ファイルの存在する環境においてはパラメータを指定することなく `Scynchronizer` を起動できます。
+### 同期確認
+
+`Synchronizer` が起動して同期処理を開始したのち、`Management Console` の画面からその状況を確認します。
+以下図のようにプロジェクト `pj_ua` のリビジョン番号が `local` ではなく `1c0c0c15a06....` というGitで発行される形式の文字列に変わっていれば、無事 `develop` ブランチについては同期ができたといえます。
+
+![リビジョン番号更新](repository.revision.updated.png)
+
+この時点で `pj_ua_prod` プロジェクトにはロボットが登録されていないためリストには表示されませんが、後述の手順で `pj_ua` プロジェクトのロボットがマージされると下記のように同じリビジョン番号が付与されます。
+
+![ロボット同期](images/repository.revision.synched.png)
+
+> [!Important]  
+> RLMによって同期される先のプロジェクト（今回の場合 `pj_ua_prod` ）については、プロジェクトのリポジトリ設定に対しては「読み取り専用」チェックを ON にすることを推奨します。
 > 
-> `synchronizer.settings` は `%LocalAppData%\Kofax RPA\11.5.0.5_549\Configuration` 配下に出力されます。
+> 仮に、`pj_ua_prod`が「読み取り専用」設定されておらず、間違って直接 `Management Console` にロボット等のオブジェクトを登録してしまった場合、`pj_ua` のリポジトリと状態の不整合（conflict）が発生し、`pj_ua_prod` への同期が止まってしまうこともあるので注意が必要です。[^3]
+
+[^3]: 中身の違う同一オブジェクトが発見された場合、`develop` → `prod` へマージを行う際に conflict が発生します。また、conflict が発生しない場合でも `prod` 側だけに存在し、`develop` には存在しないオブジェクトが発生してしまうため、資材管理上もよろしくないでしょう。
 
 
-ｐ
-ｘｘｘｘｘｘ
+<br>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+## RLMを使った本番環境の運用
+
+### 前提条件
+
+- ロボット開発者とロボット管理者が分かれており、本番環境へのアクセスはロボット管理者に限られている場合。
+- 開発・テスト環境と本番環境が `Management Console` 上でプロジェクトとして分かれており、本番用のプロジェクトは「読み取り専用」設定により、RLMからのみ更新が可能な状態とする。
+- Git連携ツールは使用しないため、Gitクライアント（今回はGitに同梱されている`Git bash`）を使用する
+
+### 本番更新の基本的な流れ
+
+
+### 通常作業（基本の型）
+
+
+### 本番更新の取り消し、切り戻し
+
+
+### 分割更新
+
+
+### コンフリクトが発生した際の対応
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 > [!TIP]  
 > #### Git 連携ツールを利用する意義
