@@ -28,14 +28,7 @@
     -webkit-overflow-scrolling: touch
 }
 
-.main-content blockquote {
-    /* padding: 0 1rem; */
-    margin-left: 0;
-    /* color: #819198; */
-    /* border-left: 0.3rem solid #dce6f0; */
-}
-
-.main-content p {
+.main-content li p {
     margin: 0.5em 0em;
 }
 
@@ -197,6 +190,14 @@ pre > code[data-lang]::before {
 /* =====================================================================
    GFM Callout (アドモニッション) のスタイル
    ===================================================================== */
+
+blockquote.callout {
+    /* padding: 0 1rem; */
+    margin-left: 0;
+    /* color: #819198; */
+    /* border-left: 0.3rem solid #dce6f0; */
+}
+
 .callout {
   border-radius: 6px;
   padding: 0; /* 子要素でpaddingを制御 */
