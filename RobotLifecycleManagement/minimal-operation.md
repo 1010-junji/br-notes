@@ -28,7 +28,7 @@ RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は 
 以下のコマンドにより RLM用のベア リポジトリを作成するのとともに、`Promotion Manager` が管理作業を行うための作業用リポジトリの作成（クローン）をします。
 
 **ベアリポジトリの初期化**
-```powershell
+```shell
 :: ベアリポジトリ用のディレクトリ作成
 C:\Users\ore> mkdir C:\RobotLifecycleManagement
 
@@ -39,7 +39,7 @@ C:\RobotLifecycleManagement> git init --bare
 ```
 
 **作業用リポジトリの作成**
-```powershell
+```shell
 :: デスクトップ上にRLMという名前で作業用リポジトリを作成（クローン）
 C:\RobotLifecycleManagement> cd ..
 
@@ -47,7 +47,7 @@ C:\> git clone RobotLifecycleManagement C:\Users\ore\Desktop\RLM
 ```
 
 **ブランチの作成と初期化**
-```powershell
+```shell
 C:\> cd C:\Users\ore\Desktop\RLM
 
 :: プロジェクトのヒストリーを開始するための「ルートコミット」を作成します。
@@ -78,7 +78,7 @@ C:\Users\ore\Desktop\RLM> git push -u origin prod:prod
 `Synchronizer` がインストールされているフォルダにカレントディレクトリを移したうえで実行します。
 
 **パラメータを付けずに起動**  
-```powershell
+```shell
 C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
 
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe
@@ -101,7 +101,7 @@ WrapperManager: Initializing...
 次に、以下の通りパラメータを指定して起動します。
 
 **パラメータを指定して実行**
-```powershell
+```shell
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
   --mc-url http://localhost:8080 ^
   --shared-secret fxxxxxxxxxxxxxAZP83ts5-KZCmat-WeuKz5NBBqwEmdDxxxxxxxxxg ^
@@ -132,7 +132,7 @@ URLに設定しているのが `Bare Git Repository` のパスです。今回は
 
 ![リポジトリの設定](images/project.pj_ua.repository_top.png)
 
-```powershell
+```shell
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
   --mc-url http://localhost:8080 ^
   --shared-secret fxxxxxxxxxxxxxAZP83ts5-KZCmat-WeuKz5NBBqwEmdDxxxxxxxxxg ^
@@ -203,7 +203,7 @@ WrapperManager: Initializing...
 `Synchronizer` のセットアップと挙動が確認出来たら、実運用に向けてWindowsのサービスに登録します。
 
 #### Windows サービスの追加 
-```powershell
+```shell
 C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
 
 C:\Program Files\BizRobo Basic 11.5.0.5\bin> ServiceInstaller.exe -i Synchronizer.conf ^
@@ -217,7 +217,7 @@ wrapper.ntservice.starttype=MANUAL wrapper.syslog.loglevel=INFO
  - `wrapper.ntservice.account` については、`RoboServer` のサービス起動ユーザーと合わせるのがいいでしょう。
 
 #### Windows サービスの削除  
-```powershell
+```shell
 C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
 
 C:\Program Files\BizRobo Basic 11.5.0.5\bin> ServiceInstaller.exe -r Synchronizer.conf ^
