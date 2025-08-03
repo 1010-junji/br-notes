@@ -20,6 +20,14 @@
   padding: 0;      /* テーマの左右の余白をリセット */
 }
 
+.main-content table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: normal;
+    -webkit-overflow-scrolling: touch
+}
+
 /* 3カラムレイアウトの基本設定 */
 .wrapper {
   max-width: 1400px; /* 全体の最大幅を少し広げる */
