@@ -64,6 +64,7 @@ html, body {
   display: flex;
   flex-direction: column; /* ★重要：子要素を縦に並べる */
   gap: 2rem;
+  width: 100vw;
 }
 
 /* サイドバーと目次は固定幅とstickyを解除 */
