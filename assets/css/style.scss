@@ -117,6 +117,48 @@
   font-size: 0.9em;
 }
 
+.site-footer {
+  background-color: #333; /* 暗めの背景色 */
+  color: #eee;             /* 明るい文字色 */
+  padding: 2rem;
+  margin-top: 3rem;       /* メインコンテンツとの間にスペースを設ける */
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.site-footer .footer-content {
+  max-width: 1400px; /* サイト全体と同じ最大幅に合わせる */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column; /* 縦並び */
+  align-items: center;    /* 中央揃え */
+  gap: 1rem;              /* 要素間の隙間 */
+}
+
+.site-footer .footer-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 1.5rem; /* リンク間の隙間 */
+  flex-wrap: wrap; /* 小さい画面で折り返す */
+  justify-content: center; /* 中央揃え */
+}
+
+.site-footer .footer-nav a {
+  color: #72b363; /* テーマのアクセントカラーに合わせた緑系のリンク色 */
+  text-decoration: none;
+}
+
+.site-footer .footer-nav a:hover {
+  text-decoration: underline;
+}
+
+.site-footer .last-updated {
+  font-style: italic;
+  color: #bbb;
+}
+
 // コードブロックにファイル名を表示するスタイル（オプション）
 // Markdownでこう書くと: ```js:ファイル名.js
 pre > code[data-lang]::before {
