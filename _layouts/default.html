@@ -10,6 +10,8 @@
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKx3KibVwEYAVSjRRD8wGtfqbiXw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% include head-custom.html %}
   </head>
   <body>
@@ -83,6 +85,46 @@
       hasInnerContainers: true
     });
   </script>
+
+  <!-- GFM Callout 変換スクリプト -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const blockquotes = document.querySelectorAll('.main-column blockquote');
+    
+        blockquotes.forEach(blockquote => {
+            const firstChild = blockquote.firstElementChild;
+            if (firstChild && firstChild.tagName === 'P') {
+                const text = firstChild.textContent.trim();
+                const match = text.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)$/i);
+    
+                if (match) {
+                    const type = match[1].toUpperCase(); // NOTE, TIP, IMPORTANT, WARNING, CAUTION
+                    const content = match[2];
+    
+                    // blockquote の内容を新しい構造に変換
+                    const newContentHtml = `<div class="callout-title"><i class="callout-icon"></i><span>${type}</span></div><div class="callout-body">${content}${blockquote.innerHTML.substring(firstChild.outerHTML.length)}</div>`;
+                    blockquote.innerHTML = newContentHtml;
+                    blockquote.classList.add('callout', `callout-${type.toLowerCase()}`); // CSSクラスを追加
+                }
+            }
+        });
+    
+        // ページ最終更新日の取得と表示（オプション）
+        // GitHub APIを叩くため、ビルド時に静的に埋め込む方が堅実ですが、
+        // ここでは簡単にJSで動的に取得する例を示します。
+        // もしGitHub Pagesがレート制限されるようなら、jekyll-last-modified-at などのプラグイン利用を検討ください。
+        fetch('https://api.github.com/repos/1010-junji/br-notes/commits?per_page=1')
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const lastCommitDate = new Date(data[0].commit.committer.date);
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    document.getElementById('last-updated-date').textContent = lastCommitDate.toLocaleDateString('ja-JP', options);
+                }
+            })
+            .catch(error => console.error('Error fetching last commit date:', error));
+    });
+    </script>
     
   </body>
 </html>
