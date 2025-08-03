@@ -192,10 +192,14 @@ pre > code[data-lang]::before {
    ===================================================================== */
 
 .main-content blockquote.callout {
-    /* padding: 0 1rem; */
+    padding: 0;
     margin-left: 0;
-    /* color: #819198; */
-    /* border-left: 0.3rem solid #dce6f0; */
+    color: inherit;            /* テーマの文字色をリセットし、親要素から継承 */
+    border-left: none;
+
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #ddd;    
 }
 
 .callout {
