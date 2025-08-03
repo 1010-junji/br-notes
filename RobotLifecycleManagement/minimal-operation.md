@@ -15,7 +15,7 @@ RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は 
 　  
 	BizRobo! Lite では `Management Console` は1台のため、本番用のプロジェクト（`pj_ua_prod`: `prod` ブランチ）と開発用のプロジェクト（`pj_ua`: `develop` ブランチ）を用意して、両者を連携させる前提で記述します。[^1]
 
-	以降の記述では、`Design Studio` で作成したロボットが `pj_ua` プロジェクトにアップロードされた状態をスタートして `Synchronizer` を起動していきます。（`pj_ua_prod` プロジェクトは空の状態）
+	以降の記述では、`Design Studio` で作成したロボットが `pj_ua` プロジェクトにアップロードされた状態をスタートとして `Synchronizer` を起動します。（`pj_ua_prod` プロジェクトは空の状態）
 
 	![構築前提の構成](images/rlm-lite.drawio.svg)
 
@@ -28,6 +28,7 @@ RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は 
 以下のコマンドにより RLM用のベア リポジトリを作成するのとともに、`Promotion Manager` が管理作業を行うための作業用リポジトリの作成（クローン）をします。
 
 **ベアリポジトリの初期化**
+場所は任意ですが、本記事では `C:\` 直下に `RobotLifecycleManagement` 問う名前でベア リポジトリを作成します。
 ```shell
 :: ベアリポジトリ用のディレクトリ作成
 C:\Users\ore> mkdir C:\RobotLifecycleManagement
@@ -39,6 +40,7 @@ C:\RobotLifecycleManagement> git init --bare
 ```
 
 **作業用リポジトリの作成**
+同様に場所は任意ですが、本記事ではログインユーザー（`Promotion Manager`を想定）のデスクトップ上にローカルリポジトリを作成します。
 ```shell
 :: デスクトップ上にRLMという名前で作業用リポジトリを作成（クローン）
 C:\RobotLifecycleManagement> cd ..
@@ -47,6 +49,7 @@ C:\> git clone RobotLifecycleManagement C:\Users\ore\Desktop\RLM
 ```
 
 **ブランチの作成と初期化**
+初期状態は作業用のブランチが存在しないため、ローカルリポジトリで作成後、ベア リポジトリ（中央リポジトリ）に同期します。
 ```shell
 C:\> cd C:\Users\ore\Desktop\RLM
 
@@ -128,7 +131,7 @@ C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
 > `synchronizer.settings` は `%LocalAppData%\Kofax RPA\11.5.0.5_549\Configuration` 配下に出力されます。
 
 また、`Synchronizer` と連携する `Management Console` 側のリポジトリの設定を以下に示します。
-URLに設定しているのが `Bare Git Repository` のパスです。今回は Git連携ツール を使用しないため、直接ローカルにリモートリポジトリ（という位置づけになるベア リポジトリ）を作成します。
+URLに設定しているのが `Bare Git Repository` のパスです。今回は Git連携ツール を使用しないため、直接ローカルに中央リポジトリ（という位置づけになるベア リポジトリ）を作成します。
 
 ![リポジトリの設定](images/project.pj_ua.repository_top.png)
 
@@ -203,6 +206,7 @@ WrapperManager: Initializing...
 `Synchronizer` のセットアップと挙動が確認出来たら、実運用に向けてWindowsのサービスに登録します。
 
 #### Windows サービスの追加 
+以下のコマンドを実行して、`Synchronizer` をWindowsサービスに追加します。
 ```shell
 C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
 
@@ -217,6 +221,7 @@ wrapper.ntservice.starttype=MANUAL wrapper.syslog.loglevel=INFO
  - `wrapper.ntservice.account` については、`RoboServer` のサービス起動ユーザーと合わせるのがいいでしょう。
 
 #### Windows サービスの削除  
+以下のコマンドを実行して、`Synchronizer` をWindowsサービスから削除します。
 ```shell
 C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
 
@@ -247,7 +252,7 @@ wrapper.ntservice.name="Synchronizer_11.5.0.5"
 1. 開発者からの依頼を受領する。（リビジョン番号を提示）
 2. 週次での最新版を`develop` ブランチへ Pullして、ローカルリポジトリへ同期
 3. 週次締め切り時点で依頼を受領したリビジョン番号までのコミット情報を `prod` ブランチへマージ
-4. `prod` ブランチの内容を確認し、問題がなければ既定の時刻に`origin/prod` ブランチへ Push して本番リリース
+4. `prod` ブランチの内容を確認し、問題がなければ既定の時刻に`origin/prod` ブランチ（中央リポジトリ）へ Push して本番リリース
 
 **gitでの処理**
 ```shell
@@ -257,7 +262,7 @@ $ cd /c/Users/ore/Desktop/RLM
 # 2. 念のため最新のdevelopブランチに切り替え
 $ git checkout develop
 
-# 3. リモートの最新情報を取得（重要！）
+# 3. 中央リポジトリの最新情報を取得（重要！）
 $ git pull
 ```
 
@@ -290,8 +295,8 @@ RLMにより本番リリースしたロボットやスケジュールなどの�
 
 1. 開発者からの依頼を受領する。（リビジョン番号を提示）
 2. 本番環境の状態を切り戻すために `prod` を最新化
-3. リビジョン番号を指定して `prod` ブランチを切り戻し`origin/prod` ブランチへ Push して本番リリース
-4. 同様に`develop` ブランチに `prod` ブランチをマージし、`origin/develop`ブランチへもPushして開発・テスト用環境も切り戻す
+3. リビジョン番号を指定して `prod` ブランチを切り戻し`origin/prod` ブランチ（中央リポジトリ）へ Push して本番リリース
+4. 同様に`develop` ブランチに `prod` ブランチをマージし、`origin/develop`ブランチ（中央リポジトリ）へもPushして開発・テスト用環境も切り戻す
 
 ```shell
 # 1. 作業ディレクトリへ移動
@@ -339,7 +344,7 @@ $ git log --oneline --graph
 |\|
 :
 
-# 8. prod ブランチの更新内容をリモートへ反映
+# 8. prod ブランチの更新内容をリ中央リポジトリへ反映
 # ── origin/prod に「ノイズ除去2」が追加され、
 #      CI や他開発者が prod を取得しても同じ履歴になる。
 $ git push
@@ -376,7 +381,7 @@ $ git log --oneline --graph
 | |/
 :
 
-# 13. develop の変更をリモートへ反映
+# 13. develop の変更を中央リポジトリへ反映
 # ── origin/develop も prod と同じく問題コミットが取り消された状態になり、
 #      今後の開発で同じノイズが再登場するリスクを低減。
 $ git push
