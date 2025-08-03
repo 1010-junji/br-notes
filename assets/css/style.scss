@@ -54,21 +54,20 @@ html, body {
 
 /* 3カラムレイアウトの基本設定 */
 .wrapper {
-  max-width: 1400px; /* 全体の最大幅を少し広げる */
+  max-width: 1400px; /* PCでの最大幅は維持 */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem; /* スマホ用に少しパディングを詰める */
   display: flex;
-  gap: 32px; /* カラム間の隙間 */
-  align-items: flex-start;
+  flex-direction: column; /* ★重要：子要素を縦に並べる */
+  gap: 2rem;
 }
 
-/* 左カラム：グローバルメニュー */
-.sidebar-nav {
-  flex: 0 0 220px;
-  position: sticky;
-  top: 32px;
-  font-size: 0.9em;
+/* サイドバーと目次は固定幅とstickyを解除 */
+.sidebar-nav, .toc-sidebar {
+  position: static; /* stickyを解除 */
+  width: 100%;      /* 幅を100%に */
 }
+
 .sidebar-nav h3 {
   font-size: 1.1em;
   border-bottom: 2px solid #ddd;
@@ -93,18 +92,9 @@ html, body {
 
 /* 中央カラム：メインコンテンツ */
 .main-column {
-  flex: 1;
-  min-width: 0;
+  order: -1; /* ★重要：メインコンテンツを一番上に表示させる */
 }
 
-/* 右カラム：ページ内目次 */
-.toc-sidebar {
-  flex: 0 0 220px;
-  position: sticky;
-  top: 32px;
-  font-size: 0.85em;
-  // Tocbotライブラリが独自のスタイルを当てるので、ここでは控えめに
-}
 .toc-sidebar h3 {
   font-size: 1.1em;
   border-bottom: 2px solid #ddd;
@@ -147,6 +137,41 @@ html, body {
   border-radius: 6px;
   border: 1px solid #ddd;
   font-size: 0.9em;
+}
+
+/* --- タブレットサイズ（768px以上）で2カラムに --- */
+@media (min-width: 768px) {
+  .wrapper {
+    flex-direction: row; /* 横並びに戻す */
+    align-items: flex-start;
+    padding: 2rem; /* パディングを元に戻す */
+  }
+
+  /* メインコンテンツと左サイドバーを表示 */
+  .main-column {
+    order: 0; /* 表示順をリセット */
+  }
+  .sidebar-nav {
+    flex: 0 0 220px; /* 幅を固定 */
+    position: sticky;
+    top: 32px;
+  }
+
+  /* 右の目次サイドバーはまだ非表示 */
+  .toc-sidebar {
+    display: none;
+  }
+}
+
+/* --- PCサイズ（1024px以上）で3カラムに --- */
+@media (min-width: 1024px) {
+  /* 右の目次サイドバーを表示する */
+  .toc-sidebar {
+    display: block; /* 表示を元に戻す */
+    flex: 0 0 220px; /* 幅を固定 */
+    position: sticky;
+    top: 32px;
+  }
 }
 
 .site-footer {
