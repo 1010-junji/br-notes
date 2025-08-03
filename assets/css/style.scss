@@ -147,25 +147,6 @@
   gap: 1rem;              /* 要素間の隙間 */
 }
 
-.site-footer .footer-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 1.5rem; /* リンク間の隙間 */
-  flex-wrap: wrap; /* 小さい画面で折り返す */
-  justify-content: center; /* 中央揃え */
-}
-
-.site-footer .footer-nav a {
-  color: #72b363; /* テーマのアクセントカラーに合わせた緑系のリンク色 */
-  text-decoration: none;
-}
-
-.site-footer .footer-nav a:hover {
-  text-decoration: underline;
-}
-
 .site-footer .last-updated {
   font-style: italic;
   color: #bbb;
