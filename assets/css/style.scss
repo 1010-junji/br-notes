@@ -1,142 +1,77 @@
 ---
 ---
 
-// =====================================================================
-// 1. 基本設定とインポート
-// =====================================================================
-
-// テーマ（jekyll-theme-cayman）のスタイルをすべてインポート
+// 1. Caymanテーマのスタイルをすべてインポートする
 @import "{{ site.theme }}";
 
-// シンタックスハイライト用のスタイル（githubテーマ）をインポート
+// 2. シンタックスハイライト用のスタイルをインポートする
 @import "syntax.css";
 
+// 3. ここから下に、あなたのカスタムCSS（3カラムレイアウト等）が続く...
 
-// =====================================================================
-// 2. 基本レイアウトとスティッキーフッター
-// =====================================================================
-
-// ページ全体の高さを最低でも画面の高さ100%にする
+/* 
+ * 1. ページ全体の高さを最低でも画面の高さ100%にする
+ */
 html, body {
-  height: 100%;
+    height: 100%;
 }
 
-// ページ全体を囲むラッパー
+/* 
+ * 2. 新しく作った .page-wrapper をFlexコンテナにする
+ */
 .page-wrapper {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-// メインコンテンツエリアを可変にし、残りのスペースをすべて埋める
-.main-content {
-  flex: 1;
-  // フッターとの間に余白を設ける
-  padding-bottom: 3rem;
-}
-
-
-// =====================================================================
-// 3. ページヘッダーとフッターのカスタムスタイル
-// =====================================================================
-
-.page-header {
-  padding: 3rem 4rem; // 余白を調整
-}
-
-.site-footer {
-  background-color: #333;
-  color: #eee;
-  padding: 2rem;
-  text-align: center;
-  font-size: 0.9em;
-  // margin-top はスティッキーフッター化に伴い不要
-}
-
-.site-footer .footer-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.site-footer .last-updated {
-  font-style: italic;
-  color: #bbb;
-}
-
-
-// =====================================================================
-// 4. 3カラムレイアウトとレスポンシブ対応
-// =====================================================================
-
-/* --- デフォルト（モバイル）スタイル --- */
-.wrapper {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1.5rem 1rem; /* 上下 24px, 左右 16px */
-}
-
-.main-column {
-  min-width: 0; /* ★重要：フレックスアイテムのオーバーフロー対策 */
-}
-
-/* モバイルではメインコンテンツが一番上にくるようにする */
-@media (max-width: 767px) {
-  .wrapper {
+    min-height: 100%; /* 高さを最低でも100%に */
     display: flex;
-    flex-direction: column;
-  }
-  .main-column {
-    order: -1;
-  }
+    flex-direction: column; /* 子要素を縦に並べる */
 }
 
-/* モバイルとタブレットでは右の目次は非表示 */
-.toc-sidebar {
-  display: none;
+/* ヘッダーの調整 */
+.page-header {
+  padding: 3rem 4rem; // 少し余白を調整
 }
 
-
-/* --- タブレットサイズ（768px以上）--- */
-@media (min-width: 768px) {
-  .wrapper {
-    display: grid; // FlexboxからGridに変更
-    grid-template-columns: 220px 1fr; // 左:220px固定, 右:残り全部
-    gap: 2rem;
-    padding: 2rem;
-  }
-
-  .sidebar-nav {
-    position: sticky;
-    top: 32px;
-  }
+/* 
+ * 1. テーマが設定している .main-content の幅制限と余白をリセットする
+ * これにより、コンテナは画面幅いっぱいに広がる準備ができます。
+ */
+.main-content {
+  max-width: none; /* テーマの最大幅制限を解除 */
+  padding: 0 0 3rem 0;      /* テーマの左右の余白をリセット */
+  flex: 1;
 }
 
-
-/* --- PCサイズ（1024px以上）--- */
-@media (min-width: 1024px) {
-  .wrapper {
-    // 3カラムのグリッド定義
-    grid-template-columns: 220px minmax(600px, 1fr) 220px;
-    gap: 2.5rem;
-  }
-  
-  .toc-sidebar {
+.main-content table {
     display: block;
-    position: sticky;
-    top: 32px;
-  }
+    width: 100%;
+    overflow: auto;
+    word-break: normal;
+    -webkit-overflow-scrolling: touch
 }
 
+.main-content li {
+    margin: 0.5em 0em;
+}
 
-// =====================================================================
-// 5. カラム内コンテンツのスタイル
-// =====================================================================
+.main-content .highlight {
+  overflow-x: auto; /* 水平方向にはみ出した場合にのみスクロールバーを表示 */
+}
 
-/* --- 左カラム：サイトメニュー --- */
+/* 3カラムレイアウトの基本設定 */
+.wrapper {
+  max-width: 1400px; /* PCでの最大幅は維持 */
+  margin: 0 auto;
+  padding: 1rem; /* スマホ用に少しパディングを詰める */
+  display: flex;
+  flex-direction: column; /* ★重要：子要素を縦に並べる */
+  gap: 2rem;
+}
+
+/* サイドバーと目次は固定幅とstickyを解除 */
+.sidebar-nav, .toc-sidebar {
+  position: static; /* stickyを解除 */
+  width: 100%;      /* 幅を100%に */
+}
+
 .sidebar-nav h3 {
   font-size: 1.1em;
   border-bottom: 2px solid #ddd;
@@ -146,11 +81,10 @@ html, body {
 .sidebar-nav ul {
   list-style: none;
   padding-left: 0;
-  margin: 0;
 }
 .sidebar-nav a {
   text-decoration: none;
-  color: #159957;
+  color: #159957; // テーマのアクセントカラーに合わせる
   display: block;
   padding: 8px 10px;
   border-radius: 4px;
@@ -160,13 +94,19 @@ html, body {
   text-decoration: none;
 }
 
-/* --- 右カラム：ページ内目次 (Tocbot) --- */
+/* 中央カラム：メインコンテンツ */
+.main-column {
+  order: -1; /* ★重要：メインコンテンツを一番上に表示させる */
+}
+
 .toc-sidebar h3 {
   font-size: 1.1em;
   border-bottom: 2px solid #ddd;
   padding-bottom: 0.5em;
   margin-top: 0;
 }
+
+// Tocbot用のスタイル調整（より見やすく）
 .toc-list {
   padding-left: 0;
   list-style: none;
@@ -190,57 +130,86 @@ html, body {
 }
 .is-active-link {
   font-weight: bold;
-  color: #159957;
+  color: #159957; // テーマのアクセントカラー
 }
 .is-active-link::before {
-  background-color: #159957;
+  background-color: #159957; // テーマのアクセントカラー
 }
 
-
-// =====================================================================
-// 6. メインコンテンツ内の要素スタイル（テーマ上書き、追加）
-// =====================================================================
-
-/* --- テーブルのレスポンシブ対応 --- */
-.main-content .table-wrapper {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-}
-
-/* --- リストアイテムのマージン相殺対策 --- */
-.main-content ul > li {
-  margin-bottom: 1em;
-}
-.main-content ul > li:last-child {
-  margin-bottom: 0;
-}
-.main-content li > p {
-  margin-top: 0;
-  margin-bottom: 0.5em;
-}
-.main-content li > ul {
-  margin-top: 0;
-}
-
-/* --- コードブロックのオーバーフロー対策とデザイン調整 --- */
-.main-content .highlight {
-  overflow-x: auto; /* 水平スクロールを有効化 */
-  background-color: #f6f8fa;
-  border: 1px solid #ddd;
+// コードブロックのスタイル調整
+.main-column pre, .main-column code {
   border-radius: 6px;
-  padding: 1em;
-  margin-bottom: 1.5em;
+  border: 1px solid #ddd;
+  font-size: 0.9em;
 }
 
-// ファイル名表示スタイル
-.main-content pre > code[data-lang]::before {
+/* --- タブレットサイズ（768px以上）で2カラムに --- */
+@media (min-width: 768px) {
+  .wrapper {
+    flex-direction: row; /* 横並びに戻す */
+    align-items: flex-start;
+    padding: 2rem; /* パディングを元に戻す */
+  }
+
+  /* メインコンテンツと左サイドバーを表示 */
+  .main-column {
+    order: 0; /* 表示順をリセット */
+  }
+  .sidebar-nav {
+    flex: 0 0 220px; /* 幅を固定 */
+    position: sticky;
+    top: 32px;
+  }
+
+  /* 右の目次サイドバーはまだ非表示 */
+  .toc-sidebar {
+    display: none;
+  }
+}
+
+/* --- PCサイズ（1024px以上）で3カラムに --- */
+@media (min-width: 1024px) {
+  /* 右の目次サイドバーを表示する */
+  .toc-sidebar {
+    display: block; /* 表示を元に戻す */
+    flex: 0 0 220px; /* 幅を固定 */
+    position: sticky;
+    top: 32px;
+  }
+}
+
+.site-footer {
+  background-color: #333; /* 暗めの背景色 */
+  color: #eee;             /* 明るい文字色 */
+  padding: 2rem;
+  margin-top: 3rem;       /* メインコンテンツとの間にスペースを設ける */
+  text-align: center;
+  font-size: 0.9em;
+}
+
+.site-footer .footer-content {
+  max-width: 1400px; /* サイト全体と同じ最大幅に合わせる */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column; /* 縦並び */
+  align-items: center;    /* 中央揃え */
+  gap: 1rem;              /* 要素間の隙間 */
+}
+
+.site-footer .last-updated {
+  font-style: italic;
+  color: #bbb;
+}
+
+// コードブロックにファイル名を表示するスタイル（オプション）
+// Markdownでこう書くと: ```js:ファイル名.js
+pre > code[data-lang]::before {
     content: attr(data-lang);
     display: block;
     background: #eee;
     color: #333;
     padding: 4px 8px;
-    margin: -1em -1em 1em -1em;
+    margin: -1em -1em 1em -1em; /* preのpaddingを打ち消す */
     border-bottom: 1px solid #ddd;
     font-size: 0.9em;
     font-family: sans-serif;
@@ -248,70 +217,160 @@ html, body {
     border-top-right-radius: 5px;
 }
 
-/* --- GFM Callout (アドモニッション) のスタイル --- */
+/* =====================================================================
+   GFM Callout (アドモニッション) のスタイル
+   ===================================================================== */
+
 .main-content blockquote.callout {
-  padding: 0;
-  margin: 1.5em 0;
-  color: inherit;
-  border-left: none;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid #ddd;
+    padding: 0;
+    margin-left: 0;
+    color: inherit;            /* テーマの文字色をリセットし、親要素から継承 */
+    border-left: none;
+
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #ddd;    
 }
+
+.callout {
+  border-radius: 6px;
+  padding: 0; /* 子要素でpaddingを制御 */
+  margin: 1.5em 0;
+  overflow: hidden; /* 角丸を適用 */
+  border: 1px solid #ddd; /* デフォルトの枠線 */
+}
+
 .callout-title {
   display: flex;
   align-items: center;
-  padding: 0.75em 1em;
+  padding: 0.2em 1em;
   font-weight: bold;
   font-size: 0.95em;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  background-color: rgba(0,0,0,0.02); /* デフォルトの背景 */
+  color: #333; /* デフォルトの文字色 */
 }
+
 .callout-title .callout-icon {
   margin-right: 0.75em;
-  font-size: 1.2em;
+  font-size: 1.2em; /* アイコンサイズ */
 }
+
 .callout-body {
   padding: 1em;
   font-size: 0.95em;
 }
-.callout-body > *:first-child { margin-top: 0; }
-.callout-body > *:last-child { margin-bottom: 0; }
 
-/* Callout 各タイプのカラースキーム */
-.callout-note { border-color: #0d6efd; background-color: #eef7ff; }
-.callout-note .callout-title { background-color: #cce7ff; color: #0550c3; }
-.callout-note .callout-icon::before { content: "\f05a"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
-
-.callout-tip { border-color: #198754; background-color: #d1e7dd; }
-.callout-tip .callout-title { background-color: #a3cfbb; color: #0f5132; }
-.callout-tip .callout-icon::before { content: "\f0eb"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
-
-.callout-important { border-color: #ffc107; background-color: #fff3cd; }
-.callout-important .callout-title { background-color: #ffe69c; color: #664d03; }
-.callout-important .callout-icon::before { content: "\f06a"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
-
-.callout-warning, .callout-caution { border-color: #dc3545; background-color: #f8d7da; }
-.callout-warning .callout-title, .callout-caution .callout-title { background-color: #f1b0b7; color: #842029; }
-.callout-warning .callout-icon::before, .callout-caution .callout-icon::before { content: "\f071"; font-family: "Font Awesome 6 Free"; font-weight: 900; }
-
-/* --- 注釈 (Footnotes) のスタイル --- */
-.footnotes {
-  padding-top: 1.5rem;
-  margin-top: 2rem;
-  border-top: 2px solid #eee;
-  font-size: 0.85em;
-  color: #555;
+/* NOTE Callout */
+.callout-note {
+  border-color: #0d6efd; /* 青系 */
+  background-color: #e0f2ff; /* 薄い青 */
 }
-.footnotes ol { padding-left: 20px; }
-.footnotes li { margin-bottom: 0.5rem; }
+.callout-note .callout-title {
+  background-color: #cce7ff; /* 少し濃い青 */
+  color: #0d6efd;
+}
+.callout-note .callout-icon::before {
+  content: "\f05a"; /* info-circle icon */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+/* TIP Callout */
+.callout-tip {
+  border-color: #28a745; /* 緑系 */
+  background-color: #d4edda; /* 薄い緑 */
+}
+.callout-tip .callout-title {
+  background-color: #c3e6cb;
+  color: #28a745;
+}
+.callout-tip .callout-icon::before {
+  content: "\f0eb"; /* lightbulb icon */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+/* IMPORTANT Callout */
+.callout-important {
+  border-color: #ffc107; /* 黄色系 */
+  background-color: #fff3cd;
+}
+.callout-important .callout-title {
+  background-color: #ffeeba;
+  color: #ffc107;
+}
+.callout-important .callout-icon::before {
+  content: "\f06a"; /* exclamation-triangle icon */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+/* WARNING Callout */
+.callout-warning {
+  border-color: #dc3545; /* 赤系 */
+  background-color: #f8d7da;
+}
+.callout-warning .callout-title {
+  background-color: #f5c6cb;
+  color: #dc3545;
+}
+.callout-warning .callout-icon::before {
+  content: "\f071"; /* triangle-exclamation icon */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+/* CAUTION Callout (WARNINGと同じアイコンと色を使うことが多い) */
+.callout-caution {
+  border-color: #dc3545;
+  background-color: #f8d7da;
+}
+.callout-caution .callout-title {
+  background-color: #f5c6cb;
+  color: #dc3545;
+}
+.callout-caution .callout-icon::before {
+  content: "\f071";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+}
+
+/* Callout内部のPタグのマージンを調整 */
+.callout-body p:first-child { margin-top: 0; }
+.callout-body p:last-child { margin-bottom: 0; }
+
+/* =====================================================================
+   注釈 (Footnotes) のスタイル調整
+   ===================================================================== */
+.footnotes {
+  padding-top: 1.5rem;      /* 区切り線と注釈リストの間のスペース */
+  border-top: 2px solid #eee; /* 上部に区切り線を追加 */
+  font-size: 0.85em;      /* 文字サイズを少し小さくする (85%) */
+  color: #555;             /* 文字色を少し薄くして本文と区別 */
+}
+
+/* 注釈リストの各項目のスタイル */
+.footnotes ol {
+  padding-left: 20px; /* 番号の左側の余白を調整 */
+}
+
+/* 注釈リストの各項目の間隔 */
+.footnotes li {
+  margin-bottom: 0.5rem; /* 各注釈の間に少しスペースを設ける */
+}
+
+/* 注釈から本文に戻るリンク「↩」のスタイル */
 .footnotes a.reversefootnote {
-  text-decoration: none;
-  color: #159957;
+  text-decoration: none; /* 下線を消す */
+  color: #159957;       /* テーマのアクセントカラーに合わせる */
   font-weight: bold;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 0 6px;
   background-color: #f8f8f8;
 }
+
 .footnotes a.reversefootnote:hover {
   background-color: #eee;
 }
