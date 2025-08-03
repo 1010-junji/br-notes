@@ -52,6 +52,10 @@ html, body {
     margin: 0.5em 0em;
 }
 
+.main-content .highlight {
+  overflow-x: auto; /* 水平方向にはみ出した場合にのみスクロールバーを表示 */
+}
+
 /* 3カラムレイアウトの基本設定 */
 .wrapper {
   max-width: 1400px; /* PCでの最大幅は維持 */
