@@ -1,42 +1,102 @@
 ---
 ---
+
+// 1. Caymanテーマのスタイルをすべてインポートする
+@import "{{ site.theme }}";
+
+// 2. ここから下に、あなたのカスタムCSS（3カラムレイアウト等）を記述する
+
+/* ヘッダーの調整 */
+.page-header {
+  padding: 3rem 4rem; // 少し余白を調整
+}
+
 /* 3カラムレイアウトの基本設定 */
 .wrapper {
+  max-width: 1200px; /* 全体の最大幅を少し広げる */
+  margin: 0 auto;
+  padding: 2rem;
   display: flex;
-  gap: 24px; /* カラム間の隙間 */
-  align-items: flex-start; /* 上揃え */
+  gap: 32px; /* カラム間の隙間 */
+  align-items: flex-start;
 }
 
 /* 左カラム：グローバルメニュー */
 .sidebar-nav {
-  flex: 0 0 220px; /* 幅を220pxに固定 */
-  position: sticky; /* スクロールしても追従する */
-  top: 20px;
+  flex: 0 0 220px;
+  position: sticky;
+  top: 32px;
+  font-size: 0.9em;
+}
+.sidebar-nav h3 {
+  font-size: 1.1em;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.5em;
+  margin-top: 0;
+}
+.sidebar-nav ul {
+  list-style: none;
+  padding-left: 0;
+}
+.sidebar-nav a {
+  text-decoration: none;
+  color: #159957; // テーマのアクセントカラーに合わせる
+  display: block;
+  padding: 8px 10px;
+  border-radius: 4px;
+}
+.sidebar-nav a:hover {
+  background-color: #f0f0f0;
+  text-decoration: none;
 }
 
 /* 中央カラム：メインコンテンツ */
 .main-column {
-  flex: 1; /* 残りの幅をすべて使用 */
-  min-width: 0; /* flexアイテムの幅が縮小できるようにするおまじない */
+  flex: 1;
+  min-width: 0;
 }
 
 /* 右カラム：ページ内目次 */
 .toc-sidebar {
-  flex: 0 0 220px; /* 幅を220pxに固定 */
-  position: sticky; /* スクロールしても追従する */
-  top: 20px;
+  flex: 0 0 220px;
+  position: sticky;
+  top: 32px;
+  font-size: 0.85em;
+  // Tocbotライブラリが独自のスタイルを当てるので、ここでは控えめに
+}
+.toc-sidebar h3 {
+  font-size: 1.1em;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.5em;
+  margin-top: 0;
 }
 
-/* メニューや目次の見た目を少し整える */
-.sidebar-nav ul, .toc-sidebar ul {
-  list-style: none;
+// Tocbot用のスタイル調整（より見やすく）
+.toc-list {
   padding-left: 0;
+  list-style: none;
 }
-.sidebar-nav a, .toc-sidebar a {
-  text-decoration: none;
-  display: block;
+.toc-list-item {
   padding: 4px 0;
 }
-.sidebar-nav a:hover, .toc-sidebar a:hover {
-  text-decoration: underline;
+.toc-link {
+  color: #666;
+  text-decoration: none;
+}
+.toc-link::before {
+  background-color: #eee;
+  content: ' ';
+  display: inline-block;
+  height: inherit;
+  left: 0;
+  margin-top: -1px;
+  position: absolute;
+  width: 2px;
+}
+.is-active-link {
+  font-weight: bold;
+  color: #159957; // テーマのアクセントカラー
+}
+.is-active-link::before {
+  background-color: #159957; // テーマのアクセントカラー
 }
