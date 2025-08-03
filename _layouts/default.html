@@ -57,5 +57,22 @@
 </main>
 <!-- Modify -->
     
+  <!-- Tocbotライブラリの読み込み -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.21.0/tocbot.min.js"></script>
+
+  <!-- Tocbotの初期化スクリプト -->
+  <script>
+    tocbot.init({
+      // 目次を生成する場所
+      tocSelector: '#toc',
+      // 目次の元となる見出しを探す場所
+      contentSelector: '.main-column',
+      // どのレベルの見出しを対象にするか (h2, h3)
+      headingSelector: 'h2, h3',
+      // スクロールに合わせてハイライトする
+      hasInnerContainers: true
+    });
+  </script>
+    
   </body>
 </html>
