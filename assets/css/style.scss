@@ -1,11 +1,13 @@
 ---
 ---
+// テーマがデフォルトで読み込むシンタックスハイライトを無効化する
+$show-syntax-highlight: false;
 
 // 1. Caymanテーマのスタイルをすべてインポートする
 @import "{{ site.theme }}";
 
 // 2. シンタックスハイライト用のスタイルをインポートする
-@import "syntax";
+@import "syntax.css";
 
 // 3. ここから下に、あなたのカスタムCSS（3カラムレイアウト等）が続く...
 
