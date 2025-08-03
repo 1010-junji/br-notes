@@ -5,7 +5,7 @@
 @import "{{ site.theme }}";
 
 // 2. シンタックスハイライト用のスタイルをインポートする
-@import "syntax.css";
+@import "syntax";
 
 // 3. ここから下に、あなたのカスタムCSS（3カラムレイアウト等）が続く...
 
