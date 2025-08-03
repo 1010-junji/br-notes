@@ -94,7 +94,7 @@ html, body {
   }
 }
 
-/* モバイルでは右の目次は非表示 */
+/* モバイルとタブレットでは右の目次は非表示 */
 .toc-sidebar {
   display: none;
 }
@@ -103,13 +103,13 @@ html, body {
 /* --- タブレットサイズ（768px以上）--- */
 @media (min-width: 768px) {
   .wrapper {
-    display: flex;
+    display: grid; // FlexboxからGridに変更
+    grid-template-columns: 220px 1fr; // 左:220px固定, 右:残り全部
     gap: 2rem;
     padding: 2rem;
   }
 
   .sidebar-nav {
-    flex: 0 0 220px;
     position: sticky;
     top: 32px;
   }
@@ -119,12 +119,13 @@ html, body {
 /* --- PCサイズ（1024px以上）--- */
 @media (min-width: 1024px) {
   .wrapper {
+    // 3カラムのグリッド定義
+    grid-template-columns: 220px minmax(600px, 1fr) 220px;
     gap: 2.5rem;
   }
   
   .toc-sidebar {
     display: block;
-    flex: 0 0 220px;
     position: sticky;
     top: 32px;
   }
