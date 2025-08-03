@@ -1,0 +1,42 @@
+---
+---
+/* 3カラムレイアウトの基本設定 */
+.wrapper {
+  display: flex;
+  gap: 24px; /* カラム間の隙間 */
+  align-items: flex-start; /* 上揃え */
+}
+
+/* 左カラム：グローバルメニュー */
+.sidebar-nav {
+  flex: 0 0 220px; /* 幅を220pxに固定 */
+  position: sticky; /* スクロールしても追従する */
+  top: 20px;
+}
+
+/* 中央カラム：メインコンテンツ */
+.main-column {
+  flex: 1; /* 残りの幅をすべて使用 */
+  min-width: 0; /* flexアイテムの幅が縮小できるようにするおまじない */
+}
+
+/* 右カラム：ページ内目次 */
+.toc-sidebar {
+  flex: 0 0 220px; /* 幅を220pxに固定 */
+  position: sticky; /* スクロールしても追従する */
+  top: 20px;
+}
+
+/* メニューや目次の見た目を少し整える */
+.sidebar-nav ul, .toc-sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+.sidebar-nav a, .toc-sidebar a {
+  text-decoration: none;
+  display: block;
+  padding: 4px 0;
+}
+.sidebar-nav a:hover, .toc-sidebar a:hover {
+  text-decoration: underline;
+}
