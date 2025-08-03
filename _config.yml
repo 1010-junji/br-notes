@@ -16,3 +16,5 @@ kramdown:
 # ビルドから除外するファイル/フォルダのリスト
 exclude:
   - .obsidian/
+
+# 
