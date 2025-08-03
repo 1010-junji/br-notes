@@ -5,6 +5,14 @@ description: "技術的な知識をまとめるナレッジベース"
 # Caymanテーマ
 theme: jekyll-theme-cayman
 
+# Markdownプロセッサとしてkramdownを使用することを明記
+markdown: kramdown
+
+# kramdownの設定：シンタックスハイライトを有効にする
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  
 # ビルドから除外するファイル/フォルダのリスト
 exclude:
   - .obsidian/
