@@ -11,9 +11,18 @@
   padding: 3rem 4rem; // 少し余白を調整
 }
 
+/* 
+ * 1. テーマが設定している .main-content の幅制限と余白をリセットする
+ * これにより、コンテナは画面幅いっぱいに広がる準備ができます。
+ */
+.main-content {
+  max-width: none; /* テーマの最大幅制限を解除 */
+  padding: 0;      /* テーマの左右の余白をリセット */
+}
+
 /* 3カラムレイアウトの基本設定 */
 .wrapper {
-  max-width: 1200px; /* 全体の最大幅を少し広げる */
+  max-width: 1400px; /* 全体の最大幅を少し広げる */
   margin: 0 auto;
   padding: 2rem;
   display: flex;
