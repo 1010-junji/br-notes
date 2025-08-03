@@ -6,6 +6,22 @@
 
 // 2. ここから下に、あなたのカスタムCSS（3カラムレイアウト等）を記述する
 
+/* 
+ * 1. ページ全体の高さを最低でも画面の高さ100%にする
+ */
+html, body {
+    height: 100%;
+}
+
+/* 
+ * 2. 新しく作った .page-wrapper をFlexコンテナにする
+ */
+.page-wrapper {
+    min-height: 100%; /* 高さを最低でも100%に */
+    display: flex;
+    flex-direction: column; /* 子要素を縦に並べる */
+}
+
 /* ヘッダーの調整 */
 .page-header {
   padding: 3rem 4rem; // 少し余白を調整
