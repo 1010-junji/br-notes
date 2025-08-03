@@ -17,7 +17,8 @@
  */
 .main-content {
   max-width: none; /* テーマの最大幅制限を解除 */
-  padding: 0;      /* テーマの左右の余白をリセット */
+  padding: 0 0 3rem 0;      /* テーマの左右の余白をリセット */
+  flex: 1;
 }
 
 .main-content table {
@@ -295,7 +296,6 @@ pre > code[data-lang]::before {
    注釈 (Footnotes) のスタイル調整
    ===================================================================== */
 .footnotes {
-  margin-top: 3rem;       /* 上のコンテンツとの間に十分なスペースを確保 */
   padding-top: 1.5rem;      /* 区切り線と注釈リストの間のスペース */
   border-top: 2px solid #eee; /* 上部に区切り線を追加 */
   font-size: 0.85em;      /* 文字サイズを少し小さくする (85%) */
