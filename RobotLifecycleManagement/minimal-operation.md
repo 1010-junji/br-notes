@@ -28,7 +28,7 @@ RLM の真価（[末尾参照](#Git-連携ツールを利用する意義)）は 
 以下のコマンドにより RLM用のベア リポジトリを作成するのとともに、`Promotion Manager` が管理作業を行うための作業用リポジトリの作成（クローン）をします。
 
 **ベアリポジトリの初期化**
-```cmd
+```powershell
 :: ベアリポジトリ用のディレクトリ作成
 C:\Users\ore> mkdir C:\RobotLifecycleManagement
 
@@ -39,7 +39,7 @@ C:\RobotLifecycleManagement> git init --bare
 ```
 
 **作業用リポジトリの作成**
-```cmd
+```powershell
 :: デスクトップ上にRLMという名前で作業用リポジトリを作成（クローン）
 C:\RobotLifecycleManagement> cd ..
 
@@ -47,7 +47,7 @@ C:\> git clone RobotLifecycleManagement C:\Users\ore\Desktop\RLM
 ```
 
 **ブランチの作成と初期化**
-```cmd
+```powershell
 C:\> cd C:\Users\ore\Desktop\RLM
 
 :: プロジェクトのヒストリーを開始するための「ルートコミット」を作成します。
@@ -78,7 +78,7 @@ C:\Users\ore\Desktop\RLM> git push -u origin prod:prod
 `Synchronizer` がインストールされているフォルダにカレントディレクトリを移したうえで実行します。
 
 **パラメータを付けずに起動**  
-```cmd
+```powershell
 C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
 
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe
@@ -101,7 +101,7 @@ WrapperManager: Initializing...
 次に、以下の通りパラメータを指定して起動します。
 
 **パラメータを指定して実行**
-```cmd
+```powershell
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
   --mc-url http://localhost:8080 ^
   --shared-secret fxxxxxxxxxxxxxAZP83ts5-KZCmat-WeuKz5NBBqwEmdDxxxxxxxxxg ^
@@ -132,7 +132,7 @@ URLに設定しているのが `Bare Git Repository` のパスです。今回は
 
 ![リポジトリの設定](images/project.pj_ua.repository_top.png)
 
-```cmd
+```powershell
 C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
   --mc-url http://localhost:8080 ^
   --shared-secret fxxxxxxxxxxxxxAZP83ts5-KZCmat-WeuKz5NBBqwEmdDxxxxxxxxxg ^
@@ -203,7 +203,7 @@ WrapperManager: Initializing...
 `Synchronizer` のセットアップと挙動が確認出来たら、実運用に向けてWindowsのサービスに登録します。
 
 #### Windows サービスの追加 
-```cmd
+```powershell
 C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
 
 C:\Program Files\BizRobo Basic 11.5.0.5\bin> ServiceInstaller.exe -i Synchronizer.conf ^
@@ -217,7 +217,7 @@ wrapper.ntservice.starttype=MANUAL wrapper.syslog.loglevel=INFO
  - `wrapper.ntservice.account` については、`RoboServer` のサービス起動ユーザーと合わせるのがいいでしょう。
 
 #### Windows サービスの削除  
-```cmd
+```powershell
 C:\Users\ore> cd C:\Program Files\BizRobo Basic 11.5.0.5\bin
 
 C:\Program Files\BizRobo Basic 11.5.0.5\bin> ServiceInstaller.exe -r Synchronizer.conf ^
@@ -250,7 +250,7 @@ wrapper.ntservice.name="Synchronizer_11.5.0.5"
 4. `prod` ブランチの内容を確認し、問題がなければ既定の時刻に`origin/prod` ブランチへ Push して本番リリース
 
 **gitでの処理**
-```bash
+```shell
 # 1. 作業ディレクトリへ移動
 $ cd /c/Users/ore/Desktop/RLM
 
@@ -261,14 +261,14 @@ $ git checkout develop
 $ git pull
 ```
 
-```bash
+```shell
 # 4. マージ先のブランチ（本番ブランチ）に切り替え
 $ git checkout prod
 
 # 5. developブランチをprodブランチにマージ(受け入れ)
-git merge --no-ff develop　…　最新のコミットまでマージ
+$ git merge --no-ff develop　…　最新のコミットまでマージ
 もしくは
-git merge --no-ff <リビジョン番号>　…　指定したリビジョンのコミットまでマージ
+$ git merge --no-ff <リビジョン番号>　…　指定したリビジョンのコミットまでマージ
 ```
 
 > [!NOTE]  
@@ -277,9 +277,9 @@ git merge --no-ff <リビジョン番号>　…　指定したリビジョンの
 > - **--no-ff (マージコミットを作成):** 上記の条件でも、必ず「`develop`を`main`にマージしました」という新しいコミット（マージコミット）を作成します。
 > - **RLMにおける `--no-ff` の重要性:** このマージコミットが「開発版を本番に昇格させた」という明確な証拠としてヒストリーに残ります。いつ、誰が、どのバージョンの `develop` を昇格させたのかが一目瞭然となり、監査や問題発生時の原因追跡に極めて有効です。RLMのようなライフサイクル管理では、このオプションはほぼ必須と言えるでしょう。
 
-```bash
+```shell
 # 6. マージ結果を中央リポジトリにpush
-git push
+$ git push
 ```
 
 <br>
@@ -293,7 +293,7 @@ RLMにより本番リリースしたロボットやスケジュールなどの�
 3. リビジョン番号を指定して `prod` ブランチを切り戻し`origin/prod` ブランチへ Push して本番リリース
 4. 同様に`develop` ブランチに `prod` ブランチをマージし、`origin/develop`ブランチへもPushして開発・テスト用環境も切り戻す
 
-```bash
+```shell
 # 1. 作業ディレクトリへ移動
 $ cd /c/Users/ore/Desktop/RLM
 
@@ -316,7 +316,7 @@ $ git log --oneline --graph
 :
 ```
 
-```bash
+```shell
 # 5. develop 側の問題コミット 6729b97 を「親¹基準」で revert（まだコミットしない）
 # ── 6729b97 はマージコミットなので -m 1 で「親¹」（＝develop 側）を残し、
 #      prod に入ってしまった変更だけを打ち消すパッチを作成して index に追加。
@@ -345,7 +345,7 @@ $ git log --oneline --graph
 $ git push
 ```
 
-```bash
+```shell
 # 9. 作業ブランチを develop に切り替え
 $ git checkout develop
 

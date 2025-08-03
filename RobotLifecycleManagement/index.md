@@ -77,7 +77,7 @@ Robot Lifecycle Management（以下 RLM）は、BizRobo! の運用管理機能�
 3. **開発用・本番用の Management Console で Git URL(/ファイルパス) とブランチ名を設定**（管理 > プロジェクト > リポジトリ）
 4. **Synchronizer を CLI で設定保存** [^2]
     
-   ```cmd
+   ```powershell
     REM BizRobo! v11.5 を前提に記載（パラメータは利用するバージョンにより異なります。）
     Synchronizer.exe -c ^
       --mc-url http://localhost:8070 ^
