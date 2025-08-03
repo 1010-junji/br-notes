@@ -78,7 +78,7 @@ Robot Lifecycle Management（以下 RLM）は、BizRobo! の運用管理機能�
 4. **Synchronizer を CLI で設定保存** [^2]
     
    ```shell
-    REM BizRobo! v11.5 を前提に記載（パラメータは利用するバージョンにより異なります。）
+    :: BizRobo! v11.5 を前提に記載（パラメータは利用するバージョンにより異なります。）
     Synchronizer.exe -c ^
       --mc-url http://localhost:8070 ^
       --shared-secret <secret> ^
