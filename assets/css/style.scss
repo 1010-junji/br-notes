@@ -100,3 +100,27 @@
 .is-active-link::before {
   background-color: #159957; // テーマのアクセントカラー
 }
+
+// コードブロックのスタイル調整
+.main-column pre, .main-column code {
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 0.9em;
+}
+
+// コードブロックにファイル名を表示するスタイル（オプション）
+// Markdownでこう書くと: ```js:ファイル名.js
+pre > code[data-lang]::before {
+    content: attr(data-lang);
+    display: block;
+    background: #eee;
+    color: #333;
+    padding: 4px 8px;
+    margin: -1em -1em 1em -1em; /* preのpaddingを打ち消す */
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
