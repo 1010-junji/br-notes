@@ -12,9 +12,15 @@ markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
-  
+
+# Sassのコンパイル設定
+sass:
+  # @importでファイルを探す場所のリスト
+  load_paths:
+    - _sass
+    - assets/css
+    - /usr/local/bundle/gems/jekyll-theme-cayman-0.2.0/_sass
+    
 # ビルドから除外するファイル/フォルダのリスト
 exclude:
   - .obsidian/
-
-# 
