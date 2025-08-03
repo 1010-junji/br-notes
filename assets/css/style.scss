@@ -293,3 +293,39 @@ pre > code[data-lang]::before {
 /* Callout内部のPタグのマージンを調整 */
 .callout-body p:first-child { margin-top: 0; }
 .callout-body p:last-child { margin-bottom: 0; }
+
+/* =====================================================================
+   注釈 (Footnotes) のスタイル調整
+   ===================================================================== */
+.footnotes {
+  margin-top: 3rem;       /* 上のコンテンツとの間に十分なスペースを確保 */
+  padding-top: 1.5rem;      /* 区切り線と注釈リストの間のスペース */
+  border-top: 2px solid #eee; /* 上部に区切り線を追加 */
+  font-size: 0.85em;      /* 文字サイズを少し小さくする (85%) */
+  color: #555;             /* 文字色を少し薄くして本文と区別 */
+}
+
+/* 注釈リストの各項目のスタイル */
+.footnotes ol {
+  padding-left: 20px; /* 番号の左側の余白を調整 */
+}
+
+/* 注釈リストの各項目の間隔 */
+.footnotes li {
+  margin-bottom: 0.5rem; /* 各注釈の間に少しスペースを設ける */
+}
+
+/* 注釈から本文に戻るリンク「↩」のスタイル */
+.footnotes a.reversefootnote {
+  text-decoration: none; /* 下線を消す */
+  color: #159957;       /* テーマのアクセントカラーに合わせる */
+  font-weight: bold;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0 6px;
+  background-color: #f8f8f8;
+}
+
+.footnotes a.reversefootnote:hover {
+  background-color: #eee;
+}
