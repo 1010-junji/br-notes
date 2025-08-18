@@ -125,11 +125,14 @@ C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
 > [!NOTE]
 > - パラメータ設定の種類は3つ。
 > 	- `-c` 実行時にキーと値のセットで指定
-> 	- `-e` 環境変数から `Scynchronizer` へパラメータを渡すときの設定。主にDockerで利用
+> 	- `-e` 環境変数から `Scynchronizer` へパラメータを渡すときの設定。主にDockerで利用[^3]
 > 	- なし。 `-c` と同時に `-s` オプションを付与し手実行すると、`synchronizer.settings` ファイルとしてパラメータが出力されます。そのため、`synchronizer.settings` ファイルの存在する環境においてはパラメータを指定することなく `Scynchronizer` を起動できます。
 > 	- `-s` オプションの付与により生成された `synchronizer.settings` ファイルは暗号化されたファイルのため、生成後中身を見ることも編集することもできません。これは内部に機密性の高い情報を保持するための設計であり、管理する側で別途設定した情報は管理しておく必要があります。設定値を更新したい場合には、再度 `-s` にて再作成を行ってください。
 > 
 > `synchronizer.settings` は `%LocalAppData%\Kofax RPA\11.5.0.5_549\Configuration` 配下に出力されます。
+
+[^3]: 環境変数 `-e` を使用した Synchronizerの起動方法の詳細は[こちら](start-using-environment-variables.md)を確認。
+
 
 また、`Synchronizer` と連携する `Management Console` 側のリポジトリの設定を以下に示します。
 URLに設定しているのが `Bare Git Repository` のパスです。今回は Git連携ツール を使用しないため、直接ローカルに中央リポジトリ（という位置づけになるベア リポジトリ）を作成します。
@@ -195,9 +198,9 @@ WrapperManager: Initializing...
 > [!Important]  
 > RLMによって同期される先のプロジェクト（今回の場合 `pj_ua_prod` ）については、プロジェクトのリポジトリ設定に対しては「読み取り専用」チェックを ON にすることを推奨します。
 > 
-> 仮に、`pj_ua_prod`が「読み取り専用」設定されておらず、間違って直接 `Management Console` にロボット等のオブジェクトを登録してしまった場合、`pj_ua` のリポジトリと状態の不整合（conflict）が発生し、`pj_ua_prod` への同期が止まってしまうこともあるので注意が必要です。[^3]
+> 仮に、`pj_ua_prod`が「読み取り専用」設定されておらず、間違って直接 `Management Console` にロボット等のオブジェクトを登録してしまった場合、`pj_ua` のリポジトリと状態の不整合（conflict）が発生し、`pj_ua_prod` への同期が止まってしまうこともあるので注意が必要です。[^4]
 
-[^3]: 中身の違う同一オブジェクトが発見された場合、`develop` → `prod` へマージを行う際に conflict が発生します。また、conflict が発生しない場合でも `prod` 側だけに存在し、`develop` には存在しないオブジェクトが発生してしまうため、資材管理上もよろしくないでしょう。
+[^4]: 中身の違う同一オブジェクトが発見された場合、`develop` → `prod` へマージを行う際に conflict が発生します。また、conflict が発生しない場合でも `prod` 側だけに存在し、`develop` には存在しないオブジェクトが発生してしまうため、資材管理上もよろしくないでしょう。
 
 
 <br>
