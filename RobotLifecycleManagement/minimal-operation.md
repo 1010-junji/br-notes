@@ -125,8 +125,9 @@ C:\Program Files\BizRobo Basic 11.5.0.5\bin>Synchronizer.exe -c ^
 > [!NOTE]
 > - パラメータ設定の種類は3つ。
 > 	- `-c` 実行時にキーと値のセットで指定
-> 	- `-e` Docker上で `Scynchronizer` を動かす際のDockerの環境変数
+> 	- `-e` 環境変数から `Scynchronizer` へパラメータを渡すときの設定。主にDockerで利用
 > 	- なし。 `-c` と同時に `-s` オプションを付与し手実行すると、`synchronizer.settings` ファイルとしてパラメータが出力されます。そのため、`synchronizer.settings` ファイルの存在する環境においてはパラメータを指定することなく `Scynchronizer` を起動できます。
+> 	- `-s` オプションの付与により生成された `synchronizer.settings` ファイルは暗号化されたファイルのため、生成後中身を見ることも編集することもできません。これは内部に機密性の高い情報を保持するための設計であり、管理する側で別途設定した情報は管理しておく必要があります。設定値を更新したい場合には、再度 `-s` にて再作成を行ってください。
 > 
 > `synchronizer.settings` は `%LocalAppData%\Kofax RPA\11.5.0.5_549\Configuration` 配下に出力されます。
 
