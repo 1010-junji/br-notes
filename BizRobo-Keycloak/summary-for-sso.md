@@ -1,3 +1,4 @@
+## SAMLによるSSO
 ### Keycloak の SAML による SSO 処理シーケンス
 
 ```mermaid
@@ -59,3 +60,4 @@ Note over C: SSO完了
 [^2]: X-Forwarded-For : クライアントの IP アドレス
 [^3]: X-Forwarded-Proto : クライアントが使っていたプロトコル (HTTP または HTTPS)1
 [^4]: X-Forwarded-Port : クライアントが使っていたポート番号
+
