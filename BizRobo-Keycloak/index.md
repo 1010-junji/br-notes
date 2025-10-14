@@ -1,6 +1,6 @@
 1. はじめに
 2. [SAMLによるSSO](summary-for-sso.md)
-3. 構築準備
+3. [構築準備](summary-for-setup)
 4. 環境構築
 5. MCの設定
 6. Keycloakの設定
@@ -32,23 +32,19 @@ Keycloak は、Web アプリケーションやマイクロサービスに対し�
 
 ## 概要
 
-ManagementConsole と同一の環境に Keycloak を構築し、SAML 認証を行うための設定手順です。  
-最低限動作での設定手順のため、情報に不足があることはご了承ください。  
-Keycloak の version は 20.0.3 を利用します。画面の update が頻繁にあるようなのでこの version 以外は非対応です。
+本資料は ManagementConsole と同一の環境に Keycloak を構築し、SAML 認証を行うための設定手順書です。  
+最低限の動作を確認するための設定であるため、実際に運用環境として構築する場合には下記に挙げた情報も参考にしてください。
+Keycloak の version は 20.0.3 を利用します。画面の更新が頻繁にあるようなので、実際に環境構築を行う際には適宜読み替が必要となります。
 
 Keycloak は自己署名を利用した TLS で構築しているため、アクセス時にアラートが出ます。
 
 ## SAML 認証について
 
 - 参考資料
-
   - https://www.splashtop.co.jp/knowhow/26/
 
 - Keycloak 公式ドキュメント
-
   - https://www.keycloak.org/documentation
-
     - 最新版（英語のみ）
-
   - https://keycloak-documentation.openstandia.jp/
     - 日本語ドキュメント（旧 ver のみ）
