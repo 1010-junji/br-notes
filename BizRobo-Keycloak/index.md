@@ -5,8 +5,8 @@
 	1. [OpenJDK の準備](prepare-jdk.md)
 	2. [SSL証明書の準備](prepare-openssl.md)
 	3. [データベースの準備](create-db)
-	4. Keycloakの環境構築
-	5. Keycloakの初期設定
+	4. [Keycloakの環境構築](setup-keycloak.md)
+	5. [Keycloakの初期設定](init-keycloak.md)
 	6. レルムの作成
 5. MCの設定
 6. Keycloakの設定

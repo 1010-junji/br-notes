@@ -1,4 +1,4 @@
-## Management Console のメタデータファイル取得
+# Management Console のメタデータファイル取得
 
 Keycloak に Client を登録するためのメタデータを Management Console からダウンロードします。
 

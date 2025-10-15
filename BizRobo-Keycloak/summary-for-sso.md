@@ -1,4 +1,4 @@
-## SAMLによるSSO
+# SAMLによるSSO
 ### Keycloak の SAML による SSO 処理シーケンス
 
 ```mermaid

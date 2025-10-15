@@ -1,8 +1,9 @@
-!!! warning "ホスト名の指定について"
+# Keycloak の初期設定
 
-    Keycloak へアクセスするためには `keycloak.conf` の `hostname` に指定したホスト名を指定する必要があります。
-
-    本手順書では `localhost:8443` をホスト名として設定しているため、今後すべての Keycloak へのアクセスは localhost:8443 を用いて実施します。
+> [!WARNING] warning "ホスト名の指定について
+>
+>Keycloak へアクセスするためには `keycloak.conf` の `hostname` に指定したホスト名を指定する必要があります。
+> 本手順書では `localhost:8443` をホスト名として設定しているため、今後すべての Keycloak へのアクセスは localhost:8443 を用いて実施します。
 
 ## 管理者アカウントの作成
 
