@@ -2,15 +2,16 @@
 
 Keycloak に Client を登録するためのメタデータを Management Console からダウンロードします。
 
-!!! warning "メタデータ取込前の注意"
-
-    メタデータをダウンロードする前に Management Console 側で `saml.xml` の設定が完了していること、その後 Tomcat を再起動していることを確認のうえ、以下のステップを実行してください。
+> [!WARNING] メタデータ取込前の注意
+>
+メタデータをダウンロードする前に Management Console 側で `saml.xml` の設定が完了していること、その後 Tomcat を再起動していることを確認のうえ、以下のステップを実行してください。
 
 1.  以下の URL にアクセスし、Management Console からメタデータ（`spring_saml_metadata.xml`）をダウンロードします。
 
-    ```title="SPメタデータのURL"
-    http://localhost:8080/mc/saml/metadata
-    ```
+	**SPメタデータのURL**
+```
+	http://localhost:8080/mc/saml/metadata
+```
 
 ## クライアント設定
 

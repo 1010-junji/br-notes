@@ -9,7 +9,12 @@
 	5. [Keycloakの初期設定](init-keycloak.md)
 	6. [レルムの作成](setup-realm.md)
 5. MCの設定
+	1. [グループの事前設定](create-mc-group.md)
+	2. [設定ファイル更新](configure-mc.md)
 6. Keycloakの設定
+	1. [クライアントの設定](setup-client.md)
+	2. Groups の設定
+	3. ユーザーの設定
 7. SAML連携確認
 8. Appendix
 
