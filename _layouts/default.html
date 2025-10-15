@@ -58,16 +58,17 @@
               {% assign current = page.url | default: '/' %}
               {% for item in site.data.nav %}
                 <li class="nav-item">
-                  {% if item.children %}
-                    <details{% if current contains item.url %} open{% endif %}>
+                {% if item.children %}
+                    <details class="nav-item-details">
                       <summary>
-                        <a href="{{ item.url }}">{{ item.title }}</a>
+                        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+                        <span class="toggle"></span>
                       </summary>
                       <ul class="nav-children">
                         {% for child in item.children %}
                           <li class="nav-child">
-                            <a href="{{ child.url }}"
-                               class="{% if current == child.url %}is-active{% endif %}">
+                            <a href="{{ child.url | relative_url }}"
+                               class="{% if child.url == page.url %}active{% endif %}">
                               {{ child.title }}
                             </a>
                           </li>
@@ -75,8 +76,8 @@
                       </ul>
                     </details>
                   {% else %}
-                    <a href="{{ item.url }}"
-                       class="{% if current == item.url %}is-active{% endif %}">
+                    <a href="{{ item.url | relative_url }}"
+                       class="{% if item.url == page.url %}active{% endif %}">
                       {{ item.title }}
                     </a>
                   {% endif %}
