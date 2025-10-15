@@ -7,13 +7,42 @@
     - title: ロボット ライフサイクル マネジメントとは
       url: /RobotLifecycleManagement/rlm-is
     - title: ロボット ライフサイクル マネジメントのミニマム運用
-      url: /br-notes/RobotLifecycleManagement/minimal-operation
+      url: /RobotLifecycleManagement/minimal-operation
     - title: 環境変数を用いたSynchronizerの起動方法
-      url: /br-notes/RobotLifecycleManagement/start-using-environment-variables
+      url: /RobotLifecycleManagement/start-using-environment-variables
 - title: KeycloakによるSSO
-  url: /br-notes/BizRobo-Keycloak/
+  url: /BizRobo-Keycloak/
   children:
     - title: SAMLによるSSO
-      url: /br-notes/BizRobo-Keycloak/summary-for-sso
+      url: /BizRobo-Keycloak/summary-for-sso
     - title: 構築準備
-      url: /br-notes/BizRobo-Keycloak/summary-for-setup
+      url: /BizRobo-Keycloak/summary-for-setup
+    - title: 環境構築_OpenJDKの準備
+      url: /BizRobo-Keycloak/prepare-jdk
+    - title: 環境構築_SSL証明書の準備
+      url: /BizRobo-Keycloak/prepare-openssl
+    - title: 環境構築_データベースの準備
+      url: /BizRobo-Keycloak/create-db
+    - title: 環境構築_Keycloak の環境構築
+      url: /BizRobo-Keycloak/setup-keycloak
+    - title: 環境構築_Keycloak の初期設定
+      url: /BizRobo-Keycloak/init-keycloak
+    - title: 環境構築_レルムの作成
+      url: /BizRobo-Keycloak/setup-realm
+    - title: MCの設定_グループの事前設定
+      url: /BizRobo-Keycloak/create-mc-group
+    - title: MCの設定_設定ファイル更新
+      url: /BizRobo-Keycloak/configure-mc
+    - title: Keycloakの設定_クライアントの設定
+      url: /BizRobo-Keycloak/setup-client
+    - title: Keycloakの設定_Groups の設定
+      url: /BizRobo-Keycloak/setup-group
+    - title: Keycloakの設定_ユーザーの設定
+      url: /BizRobo-Keycloak/setup-user
+    - title: Appendix_用語集
+      url: /BizRobo-Keycloak/glossary
+    - title: Appendix_FAQ
+      url: /BizRobo-Keycloak/faq
+    - title: Appendix_トラブルシューティング
+      url: /BizRobo-Keycloak/troubleshooting
+      
