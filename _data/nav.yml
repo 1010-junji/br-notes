@@ -1,12 +1,12 @@
 # _data/nav.yml
 - title: ホーム
   url: /
-- title: ロボット ライフサイクル マネジメント
+- title: ロボット ライフサイクル マネジメント(RLM)
   url: /RobotLifecycleManagement/
   children:
-    - title: ロボット ライフサイクル マネジメントとは
+    - title: RLMとは
       url: /RobotLifecycleManagement/rlm-is
-    - title: ロボット ライフサイクル マネジメントのミニマム運用
+    - title: RLMのミニマム運用
       url: /RobotLifecycleManagement/minimal-operation
     - title: 環境変数を用いたSynchronizerの起動方法
       url: /RobotLifecycleManagement/start-using-environment-variables
@@ -17,6 +17,8 @@
       url: /BizRobo-Keycloak/summary-for-sso
     - title: 構築準備
       url: /BizRobo-Keycloak/summary-for-setup
+    - title: 環境構築
+      url:
     - title: 環境構築_OpenJDKの準備
       url: /BizRobo-Keycloak/prepare-jdk
     - title: 環境構築_SSL証明書の準備
