@@ -2,7 +2,12 @@
 .global-nav a { text-decoration: none; } */
 .nav-root { list-style: none; padding: 0; margin: 0; }
 .nav-item { margin: .25rem 0; }
-.nav-children { list-style: none; padding-left: 1rem; margin: .5rem 0; }
+.nav-children { 
+  list-style: none; 
+  padding-left: 1rem; 
+  margin: 0 !important;
+  font-size: 0.9rem;
+}
 summary { cursor: pointer; }
 .is-active { font-weight: 700; text-decoration: underline; }
 
