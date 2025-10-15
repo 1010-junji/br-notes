@@ -21,6 +21,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/syntax.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/nav.css?v=' | append: site.github.build_revision | relative_url }}">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKx3KibVwEYAVSjRRD8wGtfqbiXw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% include head-custom.html %}
@@ -42,7 +43,7 @@
       <!-- Modify -->
       <main id="content" class="main-content" role="main">
         <div class="wrapper">
-          <!-- 左カラム：グローバルメニュー -->
+          <!-- 左カラム：グローバルメニュー
           <nav class="sidebar-nav">
             <h3>サイトメニュー</h3>
             <ul>
@@ -52,7 +53,7 @@
               <!-- ※ここにページのリンクを追加していく -->
             </ul>
           </nav>
-          
+           -->
           <nav class="global-nav" aria-label="グローバルメニュー">
             <ul class="nav-root">
               {% assign current = page.url | default: '/' %}
