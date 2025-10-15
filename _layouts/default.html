@@ -156,10 +156,18 @@
       
     <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs';
+    
+      // 1. startOnLoadを 'false' に設定し、自動ロードを無効にする
       mermaid.initialize({ 
-        startOnLoad: true, 
-        // GitHub Flavored Markdownに対応する場合は以下をコメント解除
-        querySelector: 'pre > code.language-mermaid'
+        startOnLoad: false 
+      });
+    
+      // 2. DOMの準備が整った後に、描画対象のセレクタを指定して手動で実行する
+      // querySelector: 'pre > code.language-mermaid' は、Markdownの ```mermaid ... ``` が変換された形です。
+      document.addEventListener('DOMContentLoaded', async function() {
+          await mermaid.run({
+              querySelector: 'pre > code.language-mermaid', 
+          });
       });
     </script>
     
