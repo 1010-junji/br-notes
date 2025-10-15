@@ -1,11 +1,11 @@
 # _data/nav.yml
 - title: ホーム
-  url: /br-notes/
+  url: /
 - title: ロボット ライフサイクル マネジメント
-  url: /br-notes/RobotLifecycleManagement/
+  url: /RobotLifecycleManagement/
   children:
     - title: ロボット ライフサイクル マネジメントとは
-      url: /br-notes/RobotLifecycleManagement/rlm-is
+      url: /RobotLifecycleManagement/rlm-is
     - title: ロボット ライフサイクル マネジメントのミニマム運用
       url: /br-notes/RobotLifecycleManagement/minimal-operation
     - title: 環境変数を用いたSynchronizerの起動方法
