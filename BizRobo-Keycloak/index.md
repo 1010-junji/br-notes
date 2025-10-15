@@ -13,11 +13,14 @@
 	2. [設定ファイル更新](configure-mc.md)
 6. Keycloakの設定
 	1. [クライアントの設定](setup-client.md)
-	2. Groups の設定
-	3. ユーザーの設定
-7. SAML連携確認
-8. Appendix
+	2. [Groups の設定](setup-group.md)
+	3. [ユーザーの設定](setup-user.md)
+7. Appendix
+	1. [用語集](glossary.md)
+	2. [FAQ](faq.md)
+	3. [トラブルシューティング](troubleshooting.md)
 
+---
 ## 凡例等・ドキュメントの見方
 
 設定ファイルの変更前後の値を表示する例

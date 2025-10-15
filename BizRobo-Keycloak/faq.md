@@ -6,7 +6,7 @@
 
     クライアントへSAMLを使ってログインをする際に必要な情報は `クライアント` 設定の中で `クライアント・スコープ` として `マッパー` の設定が行われています。
 
-    ![](image/faq/client-scope-mapper.png)
+![](image/faq/client-scope-mapper.png)
 
 ---
 
@@ -14,7 +14,7 @@
 
 : オリジンが異なるので、同じユーザー名であっても異なるユーザーとして判断されます。
 
-    ![](image/faq/same-user-dif-origin.png)
+![](image/faq/same-user-dif-origin.png)
 
 ---
 
@@ -24,13 +24,13 @@
 
     `saml.xml` に設定した `entityBaseURL` にアクセスされた場合には Keycloak にリダイレクトされて SAML 経由のログインが必要になりますが、以下のリソースのパスへ直接アクセスすることで SAML を通さない直接的なログインも併用することが可能です。
 
-    ```
-    http://{MCのentityBaseURL}/login.jsp
-    ```
+```
+	http://{MCのentityBaseURL}/login.jsp
+```
 
     ただし、SAML でログインする際のアカウント情報は Keycloak に認証情報を保持している一方で、Management Console へ直接ログインする際のアカウント情報は Management Console 内に保持されているため、Management Console のログイン画面から SAML アカウントでのログインはできません。
 
-    ![](image/faq/saml-user-mc-login.png)
+![](image/faq/saml-user-mc-login.png)
 
 ---
 
@@ -56,11 +56,11 @@
 
 : 変更する箇所によって結果が変わります。
 
-    **キー情報となっている email アドレスを変更した場合。**
+**キー情報となっている email アドレスを変更した場合。**
 
     :    次回 SAML 認証にて MC にログインしたタイミングで 新しいユーザーアカウントが生成されます。（古いアカウントは残ります）
 
-    **キー情報以外の firstname や lastname 、group を変更した場合。**
+**キー情報以外の firstname や lastname 、group を変更した場合。**
 
     :    次回 SAML 認証にて MC にログインしたタイミングで変更後の内容に既存のアカウントが更新されます。
 

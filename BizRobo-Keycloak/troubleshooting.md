@@ -4,9 +4,9 @@
 
 : Keycloak と Management Console 間でのデータのマッピングが正しく行われていません。一般アカウントの場合、以下の点を確認してください。
 
-    - Management Console にSAML連携用のグループが作成されていること。
-    - SAML連携用のグループが Keycloak にも登録されていること。
-    - マッピングされたグループが、Management Console でプロジェクトにアサインされていること。
+- Management Console にSAML連携用のグループが作成されていること。
+- SAML連携用のグループが Keycloak にも登録されていること。
+- マッピングされたグループが、Management Console でプロジェクトにアサインされていること。
 
 ---
 
@@ -14,15 +14,12 @@
 
 : 以下のように Management Console に正常にログインできず、ログアウトもできない場合。
 
-    ![loginerror](image/troubleshooting/loginerror.png)
+![loginerror](image/troubleshooting/loginerror.png)
 
-    1.  Keycloak にログイン後 bizrobo レルムへ切り替え、サイドバーから `セッション` を選択します。
-
-    1.  対象のユーザーの右側メニューから `サインアウト` をクリックし、セッションを削除します。
-
-        ![sessionslogout](image/troubleshooting/sessionslogout.png)
-
-    1.  Management Console へアクセスし、Keycloak のログイン画面が表示されることを確認してください。
+1.  Keycloak にログイン後 bizrobo レルムへ切り替え、サイドバーから `セッション` を選択します。
+2.  対象のユーザーの右側メニューから `サインアウト` をクリックし、セッションを削除します。
+	![sessionslogout](image/troubleshooting/sessionslogout.png)
+3.  Management Console へアクセスし、Keycloak のログイン画面が表示されることを確認してください。
 
 ---
 
