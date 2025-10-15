@@ -52,7 +52,39 @@
               <!-- ※ここにページのリンクを追加していく -->
             </ul>
           </nav>
-      
+          
+          <nav class="global-nav" aria-label="グローバルメニュー">
+            <ul class="nav-root">
+              {% assign current = page.url | default: '/' %}
+              {% for item in site.data.nav %}
+                <li class="nav-item">
+                  {% if item.children %}
+                    <details{% if current contains item.url %} open{% endif %}>
+                      <summary>
+                        <a href="{{ item.url }}">{{ item.title }}</a>
+                      </summary>
+                      <ul class="nav-children">
+                        {% for child in item.children %}
+                          <li class="nav-child">
+                            <a href="{{ child.url }}"
+                               class="{% if current == child.url %}is-active{% endif %}">
+                              {{ child.title }}
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </details>
+                  {% else %}
+                    <a href="{{ item.url }}"
+                       class="{% if current == item.url %}is-active{% endif %}">
+                      {{ item.title }}
+                    </a>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </nav>
+          
           <!-- 中央カラム：メインコンテンツ -->
           <section class="main-column">
             {{ content }}
