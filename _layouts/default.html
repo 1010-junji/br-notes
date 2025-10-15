@@ -75,84 +75,93 @@
       <!-- Modify -->
     </div>
     
-  <!-- Tocbotライブラリの読み込み -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.21.0/tocbot.min.js"></script>
-
-  <!-- Tocbotの初期化スクリプト -->
-  <script>
-    tocbot.init({
-      // 目次を生成する場所
-      tocSelector: '#toc',
-      // 目次の元となる見出しを探す場所
-      contentSelector: '.main-column',
-      // どのレベルの見出しを対象にするか (h2, h3)
-      headingSelector: 'h2, h3',
-      // スクロールに合わせてハイライトする
-      hasInnerContainers: true
-    });
-  </script>
-
-  <!-- GFM Callout 変換スクリプト -->
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-      // --- Callout変換処理 ---
-      const blockquotes = document.querySelectorAll('.main-column blockquote');
+    <!-- Tocbotライブラリの読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.21.0/tocbot.min.js"></script>
   
-      blockquotes.forEach(blockquote => {
-          const firstP = blockquote.querySelector('p:first-of-type');
-          if (!firstP) return; // 中にpタグがなければ何もしない
-  
-          const text = firstP.textContent.trim();
-          // 正規表現でCalloutのシグネチャを探す
-          const match = text.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i);
-  
-          if (match) {
-              const type = match[1].toUpperCase();
-  
-              // 1. 新しいHTML要素をDOMオブジェクトとして作成
-              const calloutTitle = document.createElement('div');
-              calloutTitle.className = 'callout-title';
-              const icon = document.createElement('i');
-              icon.className = 'callout-icon';
-              const titleText = document.createElement('span');
-              titleText.textContent = type;
-              calloutTitle.appendChild(icon);
-              calloutTitle.appendChild(titleText);
-  
-              const calloutBody = document.createElement('div');
-              calloutBody.className = 'callout-body';
-  
-              // 2. 最初のpタグから "[!NOTE]" の部分だけを削除する
-              // innerHTMLを使って、中の<code>などのタグも維持する
-              firstP.innerHTML = firstP.innerHTML.replace(/^\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i, '').trim();
-  
-              // 3. 元のblockquoteの子要素をすべて新しいcalloutBodyに移動する
-              while (blockquote.firstChild) {
-                  calloutBody.appendChild(blockquote.firstChild);
-              }
-  
-              // 4. 空になったblockquoteに、新しい構造を挿入する
-              blockquote.appendChild(calloutTitle);
-              blockquote.appendChild(calloutBody);
-  
-              // 5. blockquote自体にクラスを追加してスタイルを適用
-              blockquote.classList.add('callout', `callout-${type.toLowerCase()}`);
-          }
+    <!-- Tocbotの初期化スクリプト -->
+    <script>
+      tocbot.init({
+        // 目次を生成する場所
+        tocSelector: '#toc',
+        // 目次の元となる見出しを探す場所
+        contentSelector: '.main-column',
+        // どのレベルの見出しを対象にするか (h2, h3)
+        headingSelector: 'h2, h3',
+        // スクロールに合わせてハイライトする
+        hasInnerContainers: true
       });
+    </script>
   
-      // --- 最終更新日の取得処理（変更なし） ---
-      fetch('https://api.github.com/repos/1010-junji/br-notes/commits?per_page=1')
-          .then(response => response.json())
-          .then(data => {
-              if (data && data.length > 0) {
-                  const lastCommitDate = new Date(data[0].commit.committer.date);
-                  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                  document.getElementById('last-updated-date').textContent = lastCommitDate.toLocaleDateString('ja-JP', options);
-              }
-          })
-          .catch(error => console.error('Error fetching last commit date:', error));
-  });
-  </script>
+    <!-- GFM Callout 変換スクリプト -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Callout変換処理 ---
+        const blockquotes = document.querySelectorAll('.main-column blockquote');
+    
+        blockquotes.forEach(blockquote => {
+            const firstP = blockquote.querySelector('p:first-of-type');
+            if (!firstP) return; // 中にpタグがなければ何もしない
+    
+            const text = firstP.textContent.trim();
+            // 正規表現でCalloutのシグネチャを探す
+            const match = text.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i);
+    
+            if (match) {
+                const type = match[1].toUpperCase();
+    
+                // 1. 新しいHTML要素をDOMオブジェクトとして作成
+                const calloutTitle = document.createElement('div');
+                calloutTitle.className = 'callout-title';
+                const icon = document.createElement('i');
+                icon.className = 'callout-icon';
+                const titleText = document.createElement('span');
+                titleText.textContent = type;
+                calloutTitle.appendChild(icon);
+                calloutTitle.appendChild(titleText);
+    
+                const calloutBody = document.createElement('div');
+                calloutBody.className = 'callout-body';
+    
+                // 2. 最初のpタグから "[!NOTE]" の部分だけを削除する
+                // innerHTMLを使って、中の<code>などのタグも維持する
+                firstP.innerHTML = firstP.innerHTML.replace(/^\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i, '').trim();
+    
+                // 3. 元のblockquoteの子要素をすべて新しいcalloutBodyに移動する
+                while (blockquote.firstChild) {
+                    calloutBody.appendChild(blockquote.firstChild);
+                }
+    
+                // 4. 空になったblockquoteに、新しい構造を挿入する
+                blockquote.appendChild(calloutTitle);
+                blockquote.appendChild(calloutBody);
+    
+                // 5. blockquote自体にクラスを追加してスタイルを適用
+                blockquote.classList.add('callout', `callout-${type.toLowerCase()}`);
+            }
+        });
+    
+        // --- 最終更新日の取得処理（変更なし） ---
+        fetch('https://api.github.com/repos/1010-junji/br-notes/commits?per_page=1')
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    const lastCommitDate = new Date(data[0].commit.committer.date);
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    document.getElementById('last-updated-date').textContent = lastCommitDate.toLocaleDateString('ja-JP', options);
+                }
+            })
+            .catch(error => console.error('Error fetching last commit date:', error));
+    });
+    </script>
+      
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.0/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ 
+        startOnLoad: true, 
+        // GitHub Flavored Markdownに対応する場合は以下をコメント解除
+        // querySelector: 'pre > code.language-mermaid'
+      });
+    </script>
     
   </body>
 </html>
