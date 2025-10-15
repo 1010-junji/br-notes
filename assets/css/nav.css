@@ -5,3 +5,61 @@
 .nav-children { list-style: none; padding-left: 1rem; margin: .5rem 0; }
 summary { cursor: pointer; }
 .is-active { font-weight: 700; text-decoration: underline; }
+
+/* summaryタグのデフォルトマーカーを非表示にする */
+.sidebar-nav summary::marker,
+.sidebar-nav summary::-webkit-details-marker {
+  display: none;
+}
+
+/* summaryタグ全体をフレックスボックスにして、リンクとアイコンを横並びにする */
+.sidebar-nav summary {
+  display: flex;
+  justify-content: space-between; /* 両端に寄せる */
+  align-items: center; /* 上下中央揃え */
+  cursor: pointer;
+  padding: 8px 12px; /* クリック領域を確保するための余白 */
+  list-style: none; /* list-style起因のマーカーも消す */
+}
+
+/* リンク自体のスタイル調整 */
+.sidebar-nav summary a {
+  text-decoration: none;
+  color: inherit; /* 親要素の色を継承 */
+  flex-grow: 1; /* リンク部分が可能な限り幅を取るようにする */
+}
+
+/* 開閉アイコン（.toggle）の基本スタイル */
+.toggle {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 10px; /* リンクとの間に余白 */
+  flex-shrink: 0; /* アイコンが縮まないようにする */
+  position: relative;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* アイコンの「▶」 모양を疑似要素で作成 */
+.toggle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 6px solid #555; /* アイコンの色 */
+  transform: translate(-50%, -50%);
+}
+
+/* detailsが開いている（[open]属性を持つ）ときのアイコンを「▼」にする */
+.nav-item-details[open] > summary .toggle {
+  transform: rotate(90deg);
+}
+
+/* detailsが開いているときの子メニューのスタイル */
+.nav-item-details[open] .nav-children {
+  margin-top: 8px; /* 親メニューとの間に少し余白 */
+}
