@@ -33,6 +33,30 @@ summary { cursor: pointer; }
   flex-grow: 1; /* リンク部分が可能な限り幅を取るようにする */
 }
 
+/*
+ * アクティブなナビゲーションリンクのスタイル
+ * .activeクラスが付与されたaタグに適用される
+ */
+.sidebar-nav a.active {
+  font-weight: bold; /* 文字を太字に */
+  background-color: #eef5ff; /* 明るい青系の背景色 */
+  color: #0056b3; /* 少し濃い青色の文字 */
+}
+
+/*
+ * 補足: ホバー時のスタイルと区別するため、
+ * summaryがホバーされても、中のアクティブなリンクのスタイルは維持する
+ */
+.sidebar-nav summary:hover a.active {
+  background-color: #eef5ff;
+  color: #0056b3;
+}
+
+/* リンク以外の部分（トグルボタンなど）をホバーした際のスタイルの一貫性を保つ */
+.sidebar-nav summary:hover {
+  background-color: #f8f9fa;
+}
+
 /* 開閉アイコン（.toggle）の基本スタイル */
 .toggle {
   display: inline-block;
