@@ -49,24 +49,24 @@ true
 
 グループ化属性。Management Console へのユーザーアクセスは、特定のユーザーが属するグループによって管理されます。ID プロバイダーでユーザーに割り当てられているグループのリストを示す SAML アサーションメッセージの属性名に一致する名前を、1 つまたはリストで指定します。
 
-```title="設定値"
-	groups
+```
+groups
 ```
 
 #### idpName
 
 ID プロバイダーの名前。可能な値は、`OKTA`、`ONELOGIN`、および `AZURE` です。それ以外の場合は、`DEFAULT` に設定します。
 
-```title="設定値"
-	DEFAULT
+```
+DEFAULT
 ```
 
 #### idpUserNameRegex
 
 ユーザー名（フルネーム）の入力制限。デフォルトでの入力可能文字は英数字と空白のみなので、日本語の入力を許可するためにパターンを追加します。
 
-```title="設定値"
-	^[a-zA-Z0-9 ぁ-んァ-ヶー一-龠]*$
+```
+^[a-zA-Z0-9 ぁ-んァ-ヶー一-龠]*$
 ```
 
 **設定例：webapps/mc/WEB-INF/spring/saml.xml**
@@ -118,12 +118,12 @@ ID プロバイダーの名前。可能な値は、`OKTA`、`ONELOGIN`、およ�
 
 Management Console でログアウトした際に Keycloak 側でも同様にログアウトするかどうかを設定します。 `true` に設定しない場合は、Management Console でログアウトしても Keycloak 側のセッション情報を参照し、強制的に再ログインします。
 
-```title="設定値"
-	true
+```
+true
 ```
 
 **設定例：webapps/mc/WEB-INF/spring/saml.xml**
-```diff linenums="58"
+```diff
 <bean id="useSamlSingleLogout" class="java.lang.Boolean">
 -    <constructor-arg value="false"/>
 +    <constructor-arg value="true"/>
@@ -134,8 +134,8 @@ Management Console でログアウトした際に Keycloak 側でも同様にロ
 
 Management Console の URL に saml/login を加えたものであり、SAML 対応のサービスプロバイダーを一意に識別するための識別子です。
 
-```title="設定値"
-	http://localhost:8080/mc/saml/login
+```
+http://localhost:8080/mc/saml/login
 ```
 
 #### entityBaseURL
@@ -144,12 +144,12 @@ Management Console のベース URL。[^2]
 
     [^2]: ブラウザーや外部プログラムからアクセスする際のエンドポイントとしてのURLであり、場合によってはリバースプロキシのURLを指定します。
 
-```title="設定値"
-	http://localhost:8080/mc
+```
+http://localhost:8080/mc
 ```
 
 **設定例：webapps/mc/WEB-INF/spring/saml.xml**
-```diff linenums="92"
+```diff
 <bean id="metadataGeneratorFilter" class="org.springframework.security.saml.metadata.MetadataGeneratorFilter" lazy-init="true">
 	<constructor-arg>
 		<bean class="org.springframework.security.saml.metadata.MetadataGenerator">
@@ -225,11 +225,11 @@ https://localhost:8443/realms/bizrobo/protocol/saml/descriptor
 
 	**Tomcat をインストールしているフォルダの配下**
 ```
-	{Tomcatインストールフォルダ}/webapps/mc/WEB-INF/classes/security
+{Tomcatインストールフォルダ}/webapps/mc/WEB-INF/classes/security
 ```
 
 
-```diff linenums="203"
+```diff
 <bean id="metadata" class="org.springframework.security.saml.metadata.CachingMetadataManager" lazy-init="true">
 	<constructor-arg>
 		<list>
@@ -260,7 +260,7 @@ https://localhost:8443/realms/bizrobo/protocol/saml/descriptor
 
 コメントアウトされている `<bean>` タグを有効化し、`java.lang.String` タグに IdP メタデータの URL を指定します。
 
-```diff linenums="203"
+```diff
 <bean id="metadata" class="org.springframework.security.saml.metadata.CachingMetadataManager" lazy-init="true">
 	<constructor-arg>
 		<list>

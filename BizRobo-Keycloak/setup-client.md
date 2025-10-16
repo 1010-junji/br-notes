@@ -10,7 +10,7 @@ Keycloak に Client を登録するためのメタデータを Management Consol
 
 	**SPメタデータのURL**
 ```
-	http://localhost:8080/mc/saml/metadata
+http://localhost:8080/mc/saml/metadata
 ```
 
 ## クライアント設定
@@ -67,7 +67,7 @@ Keycloak に Client を登録するためのメタデータを Management Consol
 | Mapper type    | Name      | User Attribute | SAML Attribute Name |
 | -------------- | --------- | -------------- | ------------------- |
 | User Attribute | firstname | firstname      | firstname           |
-
+  
 4.  必要項目を入力し、`保存` します。
     ![](image/setup-client/firstname.png)
 
@@ -81,15 +81,15 @@ Keycloak に Client を登録するためのメタデータを Management Consol
 | -------------- | -------- | -------------- | ------------------- |
 | User Attribute | lastname | lastname       | lastname            |
 | User Attribute | email    | email          | email               |
-
+  
 | Mapper type | Name   | Group Attribute Name | Full group path |
 | ----------- | ------ | -------------------- | --------------- |
 | Group list  | groups | groups               | OFF             |
-
+  
 7.  以下の通り属性が登録されることを確認します。
     ![](image/setup-client/mapper-list.png)
 
-> [!INFORMATION] role_list の削除
+> [!NOTE] role_list の削除
 >
 >デフォルトで `role_list` クライアント・スコープが作成されますが、SAML クライアントには必要のないマッパー情報が含まれている可能性があります。これは SAML クライアントに直接の影響はありませんが、不要な情報が含まれているために管理上の混乱を招く可能性があります。
 > 
