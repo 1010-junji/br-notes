@@ -23,7 +23,6 @@ summary { cursor: pointer; }
   justify-content: space-between; /* 両端に寄せる */
   align-items: center; /* 上下中央揃え */
   cursor: pointer;
-  padding: 8px 12px; /* クリック領域を確保するための余白 */
   list-style: none; /* list-style起因のマーカーも消す */
 }
 
