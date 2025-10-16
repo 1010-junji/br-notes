@@ -29,22 +29,22 @@ openssl version
  >   既に秘密鍵、サーバ証明書を生成する環境をお持ちの場合、ソフトウェアにこだわりのある場合にはそちらをご利用いただいて問題ありません。
 
 1.  PowerShell を **管理者権限** で起動し、以下のコマンドを実行します。
-    ```powershell linenums="1" title="Powershellで実行"
-    wsl -l -v
-    ```
+```powershell
+wsl -l -v
+```
 
-    以下の様に表示されれば既に WSL はインストール済みです。
-    ```powershell linenums="2"
-    NAME                   STATE           VERSION
-    * Ubuntu                 Running         2
-    ```
+以下の様に表示されれば既に WSL はインストール済みです。
+```powershell
+NAME                   STATE           VERSION
+* Ubuntu                 Running         2
+```
 
 2.  WSL がインストールされていない場合には、以下のコマンドを実行します。
-    ```powershell linenums="1" title="Powershellで実行"
-    wsl --install
-    ```
+```powershell
+wsl --install
+```
 
-    インストール完了後、Windows を再起動します。
+インストール完了後、Windows を再起動します。
 
 3.  Windows 再起動後、WSL が自動起動しユーザー名とパスワードを求められます。 Windows のログインアカウントとは別に WSL のユーザーアカウントを設定します。[^1]
 
@@ -56,11 +56,11 @@ openssl version
 
 1.  任意の方法で WSL を起動し、コンソールから以降の操作を行います。
 2.  秘密鍵を生成します。
-    ```wsl linenums="1" title="wslで実行"
-    openssl genpkey -out secret.key \
-                    -algorithm RSA \
-                    -pkeyopt rsa_keygen_bits:2048
-    ```
+```wsl
+openssl genpkey -out secret.key \
+				-algorithm RSA \
+				-pkeyopt rsa_keygen_bits:2048
+```
 
 * **genpkey**: 秘密鍵を生成するためのコマンドです。
 	* **-out secret.key**: 生成された秘密鍵を secret.key という名前のファイルに保存するよう指定しています。>
@@ -79,19 +79,19 @@ openssl version
 
 4.  新しい SSL 証明書署名リクエスト（CSR）を作成します。
 
-    ```wsl linenums="1" title="wslで実行"
-    openssl req -new -key server.key > server.csr
-    ```
+```wsl
+openssl req -new -key server.key > server.csr
+```
 
 - **-new**: 新しい CSR を作成することを指示します。
 - **-key server.key**: 作成した秘密鍵（server.key）を使用して、CSR を作成します。
 - **> server.csr**: CSR を server.csr という名前でファイルに出力します。
 
 5.  CSR から自己署名証明書（.crt）を生成します
-    ```wsl linenums="1" title="wslで実行"
-    openssl x509 -req -in server.csr -signkey server.key \
-                      -out server.crt -days 3650
-    ```
+```wsl
+openssl x509 -req -in server.csr -signkey server.key \
+				  -out server.crt -days 3650
+```
 
 - **-req**: 証明書署名要求を使用することを指定します。
 - **-in server.csr**: 署名するためのCSRファイルを指定します。
