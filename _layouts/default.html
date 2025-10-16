@@ -59,9 +59,19 @@
               {% for item in site.data.nav %}
                 <li class="nav-item">
                 {% if item.children %}
-                    <details class="nav-item-details">
+                    
+                    {% comment %} 現在のページがこのセクションの子孫であるかを確認する {% endcomment %}
+                    {% assign parent_is_active = false %}
+                    {% for child in item.children %}
+                      {% if child.url == page.url %}
+                        {% assign parent_is_active = true %}
+                      {% endif %}
+                    {% endfor %}
+
+                    <details class="nav-item-details" {% if parent_is_active %}open{% endif %}>
                       <summary>
-                        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+                        {% comment %} 親リンク自体、またはその子ページがアクティブな場合に 'active' クラスを付与 {% endcomment %}
+                        <a href="{{ item.url | relative_url }}" class="{% if item.url == page.url or parent_is_active %}active{% endif %}">{{ item.title }}</a>
                         <span class="toggle"></span>
                       </summary>
                       <ul class="nav-children">
@@ -75,6 +85,8 @@
                         {% endfor %}
                       </ul>
                     </details>
+                  
+                  {% comment %} --- 子メニューを持たない要素の処理 --- {% endcomment %}
                   {% else %}
                     <a href="{{ item.url | relative_url }}"
                        class="{% if item.url == page.url %}active{% endif %}">
