@@ -1,3 +1,5 @@
+# BizRobo!のための Keycloakを用いたSAML認証設定手順
+
 1. はじめに
 2. [SAMLによるSSO](summary-for-sso.md)
 3. [構築準備](summary-for-setup)
@@ -25,9 +27,9 @@
 
 設定ファイルの変更前後の値を表示する例
 
-```diff linenums="98"
--     修正前の値
-+     修正後の値
+```diff
+-     修正前の値  
++     修正後の値  
 ```
 
 任意の値、変数を意味する場合の例
@@ -55,10 +57,8 @@ Keycloak は自己署名を利用した TLS で構築しているため、アク
 ## SAML 認証について
 
 - 参考資料
-  - https://www.splashtop.co.jp/knowhow/26/
+  - [# シングルサインオンでよく聞くSAML認証とは？　仕組みの概要、導入のメリットを解説！](https://www.splashtop.co.jp/knowhow/26/)
 
 - Keycloak 公式ドキュメント
-  - https://www.keycloak.org/documentation
-    - 最新版（英語のみ）
-  - https://keycloak-documentation.openstandia.jp/
-    - 日本語ドキュメント（旧 ver のみ）
+  - [最新版（英語のみ）](https://www.keycloak.org/documentation)
+  - [日本語ドキュメント（旧 ver のみ）](https://keycloak-documentation.openstandia.jp/)
