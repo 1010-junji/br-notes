@@ -81,6 +81,7 @@
                             <a href="{{ child.url | relative_url }}" class="{% if page.url == child.url %}active{% endif %}">
                               {{ child.title }}
                             </a>
+                            <!-- DEBUG: [page.url = {{ page.url }}] vs [child.url = {{ child.url }}] -->
                           </li>
                         {% endfor %}
                       </ul>
