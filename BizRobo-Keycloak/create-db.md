@@ -51,7 +51,7 @@ mysql> SHOW DATABASES;
 1.  Keycloak 用のデータベースにアクセスするためのアカウントを作成します。
 
 **MySQL clientで実行:**
-```sql linenums="1" title=""
+```sql
 CREATE USER 'keycloak'@'localhost' IDENTIFIED BY 'password';
 ```
 
@@ -70,7 +70,7 @@ SELECT USER, HOST FROM mysql.user;
 
 以下の様に `keycloak` ユーザが表示されていれば OK です。
 
-```sql linenums="1" hl_lines="5"
+```sql
 mysql> SELECT USER, HOST FROM mysql.user;
 +------------------+-----------+
 | USER             | HOST      |
@@ -111,7 +111,7 @@ SHOW GRANTS FOR keycloak@localhost;
 
 以下の様に付与した権限が表示されていれば OK です。
 
-```sql linenums="1" hl_lines="5-6"
+```sql
 mysql> SHOW GRANTS FOR keycloak@localhost;
 +----------------------------------------------------------------+
 | Grants for keycloak@localhost                                  |
