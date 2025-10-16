@@ -60,25 +60,25 @@
                 <li class="nav-item">
                 {% if item.children %}
                     
-                    {% comment %} 現在のページがこのセクションの子孫であるかを確認する {% endcomment %}
-                    {% assign parent_is_active = false %}
-                    {% for child in item.children %}
-                      {% if child.url == page.url %}
-                        {% assign parent_is_active = true %}
-                      {% endif %}
-                    {% endfor %}
+                    {% comment %} 現在のページのURLが、親アイテムのURLで始まっているかを確認 {% endcomment %}
+                    {% assign is_current_section = false %}
+                    {% if page.url contains item.url %}
+                      {% assign is_current_section = true %}
+                    {% endif %}
 
-                    <details class="nav-item-details" {% if parent_is_active %}open{% endif %}>
+                    <details class.="nav-item-details" {% if is_current_section %}open{% endif %}>
                       <summary>
-                        {% comment %} 親リンク自体、またはその子ページがアクティブな場合に 'active' クラスを付与 {% endcomment %}
-                        <a href="{{ item.url | relative_url }}" class="{% if item.url == page.url or parent_is_active %}active{% endif %}">{{ item.title }}</a>
+                        {% comment %} 
+                          - 現在のページが親URLそのものなら 'active'
+                          - 現在のページが子ページなら 'parent-active' を付与
+                        {% endcomment %}
+                        <a href="{{ item.url | relative_url }}" class="{% if page.url == item.url %}active{% elsif is_current_section %}parent-active{% endif %}">{{ item.title }}</a>
                         <span class="toggle"></span>
                       </summary>
                       <ul class="nav-children">
                         {% for child in item.children %}
                           <li class="nav-child">
-                            <a href="{{ child.url | relative_url }}"
-                               class="{% if child.url == page.url %}active{% endif %}">
+                            <a href="{{ child.url | relative_url }}" class="{% if page.url == child.url %}active{% endif %}">
                               {{ child.title }}
                             </a>
                           </li>
@@ -89,7 +89,7 @@
                   {% comment %} --- 子メニューを持たない要素の処理 --- {% endcomment %}
                   {% else %}
                     <a href="{{ item.url | relative_url }}"
-                       class="{% if item.url == page.url %}active{% endif %}">
+                       class="{% if page.url == item.url %}active{% endif %}">
                       {{ item.title }}
                     </a>
                   {% endif %}
