@@ -1,6 +1,6 @@
 #### `This user account is not mapped for access to this application.` エラーで Management Console にログイン出来ない場合
 
-: ![loginerror](image/troubleshooting/loginerror.png)
+![loginerror](image/troubleshooting/loginerror.png)
 
 : Keycloak と Management Console 間でのデータのマッピングが正しく行われていません。一般アカウントの場合、以下の点を確認してください。
 

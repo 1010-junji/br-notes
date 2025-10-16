@@ -14,10 +14,10 @@ Keycloak で Groups を登録する前提として、既に同グループが Ma
 
 SAML 連携においては `saml.xml` 中に `adminGroups` として設定されており、デフォルトのグループ名は `KapowAdmins` です。
 
-1.  サイドメニューから `Groups` を選択し `グループの作成` ボタンをクリックします。
+1.  サイドメニューから `Groups` を選択し `グループの作成` ボタンをクリックします。  
     ![groups](image/kc-groups/groups.png)
 
-2.  グループ名に `KapowAdmins` を入力し、`作成` をクリックする。
+2.  グループ名に `KapowAdmins` を入力し、`作成` をクリックする。  
     ![creategroup](image/kc-groups/creategroup.png)
 
 ## 管理者グループの作成
@@ -34,12 +34,12 @@ SAML 連携においては `saml.xml` 中に `administratorGroups` として設�
 
 ![](image/kc-groups/rpaadmin-mc.png)
 
-1.  `グループの作成` をクリックします。
+1.  `グループの作成` をクリックします。  
     ![groups](image/kc-groups/groups2.png)
 
 2.  グループ名に `RpaAdministrators` を入力し、`作成` をクリックする。
 
-3.  以下の通りグループが作成されたことを確認します。
+3.  以下の通りグループが作成されたことを確認します。  
     ![groups](image/kc-groups/rpaadmin-group.png)
 
 ## ユーザーグループの作成
@@ -48,10 +48,10 @@ SAML 連携においては `saml.xml` 中に `administratorGroups` として設�
 
 SAML 連携においては `saml.xml` 中に `groupsAttributes` として設定されており、対象のグループ名は [MC の設定](configure-mc.md) にてマッピング項目名を定義しています。
 
-1.  `グループの作成` をクリックします。
+1.  `グループの作成` をクリックします。  
     ![groups](image/kc-groups/groups2.png)
 
 2.  Management Console で作成したグループ名（`saml_group`）を入力し、`作成` をクリックします。
 
-3.  以下の通りグループが作成されたことを確認します。
+3.  以下の通りグループが作成されたことを確認します。  
     ![groups](image/kc-groups/kc-groups.png)

@@ -156,7 +156,8 @@ Server configuration updated and persisted. Run the following command to review 
 	kc.bat show-config
 ```
 
-> [!INFORMATION] UnsupportedClassVersionError が出る場合
+
+> [!NOTE] UnsupportedClassVersionError が出る場合
 >
 >複数の原因が考えられるため自環境で行った対処のみ紹介します。
 > - JRE8 をインストールしている場合は、アンインストールする。
@@ -172,7 +173,7 @@ bin/kc.bat start
 
 以下の様に表示され、エラーが発生しなければ OK です。
 
-```powershell linenums="1"
+```powershell
 ：
 2023-04-29 12:49:17,207 INFO  [org.keycloak.services] (main) KC-SERVICES0050: Initializing master realm                                                                tgresql, keycloak, logging-gelf, n
 2023-04-29 12:49:20,790 INFO  [io.quarkus] (main) Keycloak 20.0.3 on JVM (powered by Quarkus 2.13.6.Final) started in 42.991s. Listening on: https://0.0.0.0:8443
@@ -217,7 +218,7 @@ Keycloak.exe install
 ```
 
 以下の表示となれば OK です。
-```powershell linenums="2" title="PowerShellの実行結果"
+```powershell
 2023-02-06 16:41:47,827 INFO  - Installing service 'Keycloak (Keycloak)'...
 2023-02-06 16:41:47,919 INFO  - Service 'Keycloak (Keycloak)' was installed successfully.
 ```

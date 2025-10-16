@@ -8,7 +8,8 @@ Keycloak において TLS 通信を有効化するために SSL 証明書（`.cr
 
 以降、下記バージョンの OpenSSL を利用して自己証明書を生成します。
 
-```powershell linenums="1" title="OpenSSLのバージョン確認"
+**OpenSSLのバージョン確認**
+```powershell
 openssl version
 # OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
 ```

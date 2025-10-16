@@ -17,6 +17,7 @@
 | -------- | ----- |
 | Username | admin |
 | Password | admin |
+  
 
 3.  以下の通りアカウントが作成されることを確認します。
     ![welcometokeycloak](image/init-keycloak/created-admin.png)
@@ -50,6 +51,7 @@
 | Supported locales    | `日本語` |
 | Default locale       | 日本語   |
 
+  
 3.  一度 `Sign out` し、表示が日本語に変更されることを確認します。
     ![importclient](image/init-keycloak/localized-top.png)
 
@@ -82,6 +84,6 @@
 | Digits               | パスワードに含める必要がある数字の数を指定します。<br/>追加時のデフォルトは`1`です。                                    |
 | Hashing Algorithm    | パスワードのハッシュ化に使用するアルゴリズムを指定します。<br/>追加時のデフォルトは`pbkdf2-sha256`です。                |
 | Maximum Length       | パスワードの最大長を指定します。<br/>追加時のデフォルトは`64`です。                                                     |
-
+  
 3.  選択したポリシーの設定を行います。
     ![policysetting](image/init-keycloak/policysetting.png)
