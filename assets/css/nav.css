@@ -57,6 +57,12 @@ summary { cursor: pointer; }
   background-color: #f8f9fa;
 }
 
+/* 子ページが表示されているときの、親リンクのスタイル */
+.sidebar-nav a.parent-active {
+  font-weight: bold; /* 文字を太字に */
+  color: #333; /* 通常より少し濃い色 */
+}
+
 /* 開閉アイコン（.toggle）の基本スタイル */
 .toggle {
   display: inline-block;
