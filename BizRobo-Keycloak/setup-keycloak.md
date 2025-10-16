@@ -195,6 +195,7 @@ WinSW を利用して Keycloak をサービス化する方法を以下に記載�
 2.  ダウンロードした exe ファイルを`keycloak-20.0.3`ディレクトリに移動します。
 3.  exe ファイルの名前を`Keycloak.exe`に変更します。
 4.  `keycloak-20.0.3`ディレクトリに`Keycloak.xml`ファイルを以下の内容で作成します。
+
 **Keycloak.xml**
 ```xml
 <service>
