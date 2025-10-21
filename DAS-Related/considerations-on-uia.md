@@ -1,5 +1,7 @@
 # UI Automation に関する考察
 
+> Edited and compiled from a conversation with AI
+
 UI Automation（UIA）は、決して対象アプリに影響を与えない魔法のような「読み取り専用」の技術では**ありません**。
 この重要なテーマについて、段階的に解説させていただければと思います。
 
