@@ -45,4 +45,8 @@
       url: /BizRobo-Keycloak/faq
     - title: Appendix_トラブルシューティング
       url: /BizRobo-Keycloak/troubleshooting
-      
+- title: DAS関連トピックス
+  url: /DAS-Related/
+  children:
+    - title: UI Automation に関する考察
+      url: /DAS-Related/considerations-on-uia
