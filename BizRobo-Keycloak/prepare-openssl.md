@@ -55,7 +55,9 @@ wsl --install
 以下の手順に従い、OpenSSL を使用して HTTPS 通信に必要なサーバー証明書を作成します。
 
 1.  任意の方法で WSL を起動し、コンソールから以降の操作を行います。
+
 2.  秘密鍵を生成します。
+
 ```wsl
 openssl genpkey -out secret.key \
 				-algorithm RSA \
@@ -68,9 +70,10 @@ openssl genpkey -out secret.key \
 * **-pkeyopt rsa_keygen_bits:2048**: RSA 鍵の長さを 2048 ビットに設定しています。
 
 3.  秘密鍵ファイルからサーバー鍵ファイルを作成します。
-    ```wsl linenums="1" title="wslで実行"
-    openssl pkey -in secret.key -out server.key -traditional
-    ```
+
+```wsl
+openssl pkey -in secret.key -out server.key -traditional
+```
 
 - **pkey**: 秘密鍵を操作するためのコマンドです。
 - **-in secret.key**: secret.key を入力ファイルに指定します。
@@ -88,6 +91,7 @@ openssl req -new -key server.key > server.csr
 - **> server.csr**: CSR を server.csr という名前でファイルに出力します。
 
 5.  CSR から自己署名証明書（.crt）を生成します
+
 ```wsl
 openssl x509 -req -in server.csr -signkey server.key \
 				  -out server.crt -days 3650
