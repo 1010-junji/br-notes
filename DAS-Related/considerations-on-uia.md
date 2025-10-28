@@ -83,4 +83,4 @@ UI Automationは、アプリケーションの内部状態を詳細に把握で�
 ---
 
 **参考**
-[BR UI-Monitor](https://github.com/1010-junji/BR.UI.Monitor)
+[BizRobo! UIモニター](https://github.com/1010-junji/BR.UI.Monitor)
